@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./loader.component.scss'],
 })
 export class AppLoader {
-    @Input() public isLoading: boolean = false;
+    @Input() public isLoading = false;
 }
