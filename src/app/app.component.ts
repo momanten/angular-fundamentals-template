@@ -9,7 +9,7 @@ import {
   Subject,
   Subscription,
   switchMap,
-  concatAll
+  //concatAll
 } from 'rxjs';
 import { MockDataService } from './mock-data.service';
 
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   searchTermByCharacters = new Subject<string>();
   charactersResults$!: Observable<any>;
   planetAndCharactersResults$!: Observable<any>;
-  isLoading: boolean = false;
+  isLoading = false;
   subscriptions: Subscription[] = [];
 
   constructor(private mockDataService: MockDataService) {}
@@ -50,7 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
       debounceTime(300),
       switchMap((searchInput)=>this.mockDataService.getCharacters(searchInput))
     );
-
     //or ? - works at least : )
     /*this.charactersResults$ = this.searchTermByCharacters.pipe(
       filter((searchInput) => searchInput.length > 2),
