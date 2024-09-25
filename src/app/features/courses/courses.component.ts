@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CourseData } from '@app/shared/types/course.model';
+import { CourseDataType } from '@app/shared/types/course.model';
 
 @Component({
   selector: 'app-courses',
@@ -7,6 +7,9 @@ import { CourseData } from '@app/shared/types/course.model';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent {
-  @Input() courses!:CourseData[];
+  @Input() courses!:CourseDataType[];
+
+  readonly emptyListTitle = 'Your List is Empty';
+  readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
 }

@@ -1,4 +1,10 @@
-<p>courses-list works!</p>
 <ng-container *ngFor="let course of courses">
-  <app-course-card [courseData]="course"></app-course-card>
+  <app-course-card [editable]="true" [courseData]="course">
+    <ng-container *ngIf="editable; then editableButtons"></ng-container>
+  </app-course-card>
 </ng-container> 
+
+<ng-template #editableButtons>
+    <app-button [iconName]="'pencil'"></app-button>
+    <app-button [iconName]="'trash-can'"></app-button>
+</ng-template>

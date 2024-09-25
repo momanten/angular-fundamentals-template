@@ -1,9 +1,11 @@
 <ng-template #emptyList>
-  <app-info></app-info>
+  <app-info [title]="emptyListTitle" [text]="emptyListText">
+    <app-button [buttonText]="'ADD NEW COURSE'"></app-button>
+  </app-info>
 </ng-template>
 
 <ng-container *ngIf="courses.length>0; else emptyList"> 
-  <app-courses-list [courses]="courses"></app-courses-list>
+  <app-courses-list [editable]="true" [courses]="courses"></app-courses-list>
 </ng-container>
 
 

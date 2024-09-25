@@ -1,23 +1,26 @@
-<div class="course-card">
-    <div class="course-card__description">
-      <!-- Replace ::text:: with your code -->
-      <div class="course-card__description-title">::Title::</div>
-      <div class="course-card__description-text">::Description::</div>
-    </div>
-    <div class="course-card__info">
-        <div class="course-card__info-text">
-            <div>
-              <b>Authors: </b>
-              ::Authors::
-            </div>
-            <div><b>Duration: </b><span class="course-card__duration">::Duration::</span></div>
-            <div><b>Created: </b><span class="course-card__date">::Creation Date::</span></div>
+<!-- Created a container to have title above both the description and info as it is in the figma plan. And description to be in the same level -->
+<div class="course-card-container">
+    <div class="course-card__description-title">{{courseData.title}}</div>
+    <div class="course-card">
+        <div class="course-card__description">
+          <!-- Replace ::text:: with your code -->
+          <div class="course-card__description-text">{{courseData.description}}</div>
         </div>
-        <div class="course-card__info-actions">
-            <app-button></app-button>
-            <div class="course-card__buttons">
-                <!--Enter your code here-->
-                <ng-content></ng-content>
+        <div class="course-card__info">
+            <div class="course-card__info-text">
+                <div>
+                  <b>Authors: </b>
+                  {{ authorNames }}
+                </div>
+                <div><b>Duration: </b><span class="course-card__duration">{{durationInHours}}</span></div>
+                <div><b>Created: </b><span class="course-card__date">{{dateSeparatedWithDots}}</span></div>
+            </div>
+            <div class="course-card__info-actions">
+                <app-button [buttonText]="'Show Course'"></app-button>
+                <div class="course-card__buttons">
+                    <!--Enter your code here-->
+                    <ng-content></ng-content>
+                </div>
             </div>
         </div>
     </div>
