@@ -1,7 +1,9 @@
 <app-header>
-  <app-button></app-button>
+  <span>{{user}}</span>
+  <app-button [buttonText]="'Login'"></app-button> <!-- [iconName]="'trash-can'" [iconName]="'pencil'" -->
 </app-header>
 <div class="app-root">
+  <app-courses [courses]="coursesWithAuthorNames"></app-courses>
   <!-- Search component -->
   <!--<app-search></app-search>-->
 

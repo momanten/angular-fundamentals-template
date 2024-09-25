@@ -35,8 +35,8 @@ const components = [
 @NgModule({
   declarations: [components],
   imports: [
-    CommonModule,
     FontAwesomeModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
   ],
