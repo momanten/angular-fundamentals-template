@@ -7,7 +7,7 @@ import { CourseDataType } from '@app/shared/types/course.model';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent {
-  @Input() courses!:CourseDataType[];
+  @Input() courses:CourseDataType[]=[];
   showCourseInfo:CourseDataType | undefined=undefined;
 
   readonly emptyListTitle = 'Your List is Empty';
