@@ -11,7 +11,6 @@ import { AuthorType, CourseDataType, MockCourseDataType } from './shared/types/c
 export class AppComponent {
   title = 'courses-app';
   user = 'Admin';
-
   /* courses:MockCourseDataType[] = []; */
   courses:MockCourseDataType[] = mockedCoursesList;
   authors:AuthorType[] = mockedAuthorsList;
@@ -20,7 +19,7 @@ export class AppComponent {
       id: course.id,
       title: course.title,
       description: course.description,
-      date: course.creationDate, // Change 'creationDate' to 'date'
+      date: course.creationDate, // 'creationDate' to 'date'
       duration: course.duration,
       authors: course.authors.map(authorId => {
         const author = this.authors.find(a => a.id === authorId);

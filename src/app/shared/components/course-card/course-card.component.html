@@ -16,7 +16,7 @@
                 <div><b>Created: </b><span class="course-card__date">{{dateSeparatedWithDots}}</span></div>
             </div>
             <div class="course-card__info-actions">
-                <app-button [buttonText]="'Show Course'"></app-button>
+                <app-button (click)="showCourseInfo()" [buttonText]="'Show Course'"></app-button>
                 <div class="course-card__buttons">
                     <!--Enter your code here-->
                     <ng-content></ng-content>

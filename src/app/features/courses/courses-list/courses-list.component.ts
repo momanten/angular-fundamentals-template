@@ -11,8 +11,8 @@ export class CoursesListComponent {
   @Input() editable:boolean = false;
   @Output() showCourse = new EventEmitter<string>(); 
   @Output() editCourse = new EventEmitter<string>(); 
-  @Output() deleteCourse = new EventEmitter<string>(); 
-
+  @Output() deleteCourse = new EventEmitter<string>();
+  
   showCourseInfo(courseId:CourseDataType['id']) {
     this.showCourse.emit(courseId);
   }
