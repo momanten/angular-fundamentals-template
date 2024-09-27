@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { IconNames } from '@app/shared/types/icons.model';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { IconName, IconProp } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -8,16 +9,16 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent{
+export class ButtonComponent implements OnChanges{
   @Input() buttonText?:string;
-  @Input() iconName?:'trash-can' | 'pencil';
+  @Input() iconName?:IconNames;
   icon: IconProp | undefined;
   
-  constructor(library: FaIconLibrary) {
+  constructor(private library: FaIconLibrary) {
     library.addIconPacks(fas);
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     if (this.iconName) {
       this.icon = ['fas',this.iconName as IconName]; 
     }

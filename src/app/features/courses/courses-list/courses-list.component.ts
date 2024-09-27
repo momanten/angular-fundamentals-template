@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input,Output } from '@angular/core';
-import { CourseDataType } from '@app/shared/types/course.model';
+import { CourseData } from '@app/shared/types/course.model';
+import { IconNames } from '@app/shared/types/icons.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -7,19 +8,20 @@ import { CourseDataType } from '@app/shared/types/course.model';
   styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent {
-  @Input() courses!:CourseDataType[];
+  IconNames = IconNames;
+  @Input() courses!:CourseData[];
   @Input() editable:boolean = false;
   @Output() showCourse = new EventEmitter<string>(); 
   @Output() editCourse = new EventEmitter<string>(); 
   @Output() deleteCourse = new EventEmitter<string>();
   
-  showCourseInfo(courseId:CourseDataType['id']) {
+  showCourseInfo(courseId:CourseData['id']) {
     this.showCourse.emit(courseId);
   }
-  onEdit(courseId:CourseDataType['id']) {
+  onEdit(courseId:CourseData['id']) {
     this.editCourse.emit(courseId);
   }
-  onDelete(courseId:CourseDataType['id']) {
+  onDelete(courseId:CourseData['id']) {
     this.deleteCourse.emit(courseId);
   }
 

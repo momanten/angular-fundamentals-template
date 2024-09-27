@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilityService } from '@app/services/utility.service';
-import type { CourseDataType } from '@app/shared/types/course.model';
+import type { CourseData } from '@app/shared/types/course.model';
 
 @Component({
   selector: 'app-course-card',
@@ -11,7 +11,7 @@ export class CourseCardComponent {
 
 
   @Input() editable:boolean=false;
-  @Input() courseData!:CourseDataType;
+  @Input() courseData!:CourseData;
   @Output() clickOnShow = new EventEmitter<string>(); 
 
   constructor(private utilityService: UtilityService) {}
