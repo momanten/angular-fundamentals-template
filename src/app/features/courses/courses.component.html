@@ -1,6 +1,6 @@
-<ng-container *ngIf="showCourseInfo; else courseList">
+<ng-container *ngIf="courseInfo; else courseList">
   <!-- Render course info -->
-  <app-course-info (showCourseList)="handleShowCourses()" [course]="showCourseInfo"></app-course-info>
+  <app-course-info (showCourseList)="handleShowCourses()" [course]="courseInfo"></app-course-info>
 </ng-container>
 
 <ng-template #courseList>

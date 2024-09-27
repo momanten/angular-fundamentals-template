@@ -15,13 +15,13 @@ export class CoursesListComponent {
   @Output() editCourse = new EventEmitter<string>(); 
   @Output() deleteCourse = new EventEmitter<string>();
   
-  showCourseInfo(courseId:CourseData['id']) {
+  showCourseInfo(courseId:string):void {
     this.showCourse.emit(courseId);
   }
-  onEdit(courseId:CourseData['id']) {
+  onEdit(courseId:string):void {
     this.editCourse.emit(courseId);
   }
-  onDelete(courseId:CourseData['id']) {
+  onDelete(courseId:string):void {
     this.deleteCourse.emit(courseId);
   }
 

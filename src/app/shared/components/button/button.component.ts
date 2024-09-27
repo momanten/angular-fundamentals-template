@@ -15,7 +15,7 @@ export class ButtonComponent implements OnChanges{
   icon: IconProp | undefined;
   
   constructor(private library: FaIconLibrary) {
-    library.addIconPacks(fas);
+    this.library.addIconPacks(fas);
   }
 
   ngOnChanges() {

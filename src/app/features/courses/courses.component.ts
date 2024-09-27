@@ -8,17 +8,17 @@ import { CourseData } from '@app/shared/types/course.model';
 })
 export class CoursesComponent {
   @Input() courses:CourseData[]=[];
-  showCourseInfo:CourseData|undefined=undefined;
+  courseInfo:CourseData|undefined=undefined;
 
   readonly emptyListTitle = 'Your List is Empty';
   readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
-  handleShowCourseInfo(courseId:CourseData['id']) {
-    this.showCourseInfo = this.courses.find((course)=>course.id===courseId);
+  handleShowCourseInfo(courseId:string) {
+    this.courseInfo = this.courses.find((course)=>course.id===courseId);
   }
 
-  handleShowCourses() {
-    this.showCourseInfo = undefined;
+  handleShowCourses():void {
+    this.courseInfo = undefined;
   }
 
 }
