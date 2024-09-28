@@ -1,12 +1,12 @@
 import { Author } from "./author.model";
 
-export interface CourseData {
+export interface Course {
   id:string;
   title:string;
   description:string;
-  date:string;
+  creationDate:string;
   duration:number;
-  authors:Author[];
+  authors:string[];
 }
 
-export type MockCourseData = Omit<CourseData, 'date' | 'authors'> & {creationDate:string, authors:string[]};
+export type CourseInfo = Omit<Course, 'creationDate' | 'authors'> & {date:string, authors:Author[]};

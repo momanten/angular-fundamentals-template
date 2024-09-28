@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Author } from '@app/shared/types/author.model';
-import { CourseData, MockCourseData } from '@app/shared/types/course.model';
 
 @Injectable({
   providedIn: 'root'

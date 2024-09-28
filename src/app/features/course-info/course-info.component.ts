@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilityService } from '@app/services/utility.service';
-import { CourseData } from '@app/shared/types/course.model';
+import { CourseInfo } from '@app/shared/types/course.model';
 
 @Component({
   selector: 'app-course-info',
@@ -9,7 +9,7 @@ import { CourseData } from '@app/shared/types/course.model';
 })
 export class CourseInfoComponent {
   // Use the names for the input `course`.
-  @Input() course!:CourseData;
+  @Input() course!:CourseInfo;
   @Output() showCourseList = new EventEmitter();
 
   constructor(private utilityService: UtilityService) {}

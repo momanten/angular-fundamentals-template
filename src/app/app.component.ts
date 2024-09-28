@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { mockedAuthorsList, mockedCoursesList } from '../assets/mocks/mocks';
-import { CourseData, MockCourseData } from './shared/types/course.model';
+import { Course} from './shared/types/course.model';
 import { Author } from './shared/types/author.model';
 import { MappingService } from './services/mapping.service';
 
@@ -11,11 +11,10 @@ import { MappingService } from './services/mapping.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private readonly courses:MockCourseData[] = mockedCoursesList;
-  private readonly authors:Author[] = mockedAuthorsList;
-  coursesWithAuthorNames:CourseData[] = this.mappingService.createCoursesWithAuthorNames(this.courses,this.authors);
+  courses:Course[] = mockedCoursesList;
+  authors:Author[] = mockedAuthorsList;
+
   title = 'courses-app';
   user = 'Admin';
 
-  constructor(private mappingService: MappingService) {}
 }

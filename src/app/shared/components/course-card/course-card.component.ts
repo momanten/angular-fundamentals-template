@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilityService } from '@app/services/utility.service';
-import type { CourseData } from '@app/shared/types/course.model';
+import type { CourseInfo } from '@app/shared/types/course.model';
 
 @Component({
   selector: 'app-course-card',
@@ -11,23 +11,23 @@ export class CourseCardComponent {
 
 
   @Input() editable:boolean=false;
-  @Input() courseData!:CourseData;
+  @Input() courseInfo!:CourseInfo;
   @Output() clickOnShow = new EventEmitter<string>(); 
 
   constructor(private utilityService: UtilityService) {}
 
   get authorNames():string {
-    return this.utilityService.authorsToString(this.courseData.authors);
+    return this.utilityService.authorsToString(this.courseInfo.authors);
   }
   get durationInHours():string {
-    return this.utilityService.durationInHoursString(this.courseData.duration);
+    return this.utilityService.durationInHoursString(this.courseInfo.duration);
   }
   get dateSeparatedWithDots(): string {
-    return this.utilityService.formatDateWithDots(this.courseData.date);
+    return this.utilityService.formatDateWithDots(this.courseInfo.date);
   }
 
   showCourseInfo() {
-    this.clickOnShow.emit(this.courseData.id);
+    this.clickOnShow.emit(this.courseInfo.id);
     console.log('Clicked in course Card')
   }
 
