@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilityService } from '@app/services/utility.service';
-import { CourseInfo } from '@app/shared/types/course.model';
+import { Course } from '@app/shared/types/course.model';
 
 @Component({
   selector: 'app-course-info',
@@ -9,7 +9,7 @@ import { CourseInfo } from '@app/shared/types/course.model';
 })
 export class CourseInfoComponent {
   // Use the names for the input `course`.
-  @Input() course!:CourseInfo;
+  @Input() course!: Course;
   @Output() showCourseList = new EventEmitter();
 
   constructor(private utilityService: UtilityService) {}
@@ -21,7 +21,7 @@ export class CourseInfoComponent {
     return this.utilityService.durationInHoursString(this.course.duration);
   }
   get dateSeparatedWithDots(): string {
-    return this.utilityService.formatDateWithDots(this.course.date);
+    return this.utilityService.formatDateWithDots(this.course.creationDate);
   }
 
   handleBackToCourses() {

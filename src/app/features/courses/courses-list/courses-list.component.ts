@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input,Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { MappingService } from '@app/services/mapping.service';
+import { Component, EventEmitter, Input,Output, SimpleChanges } from '@angular/core';
 import { Author } from '@app/shared/types/author.model';
-import { Course, CourseInfo } from '@app/shared/types/course.model';
+import { Course } from '@app/shared/types/course.model';
 import { IconNames } from '@app/shared/types/icons.model';
 
 @Component({
@@ -17,15 +16,8 @@ export class CoursesListComponent {
   @Output() showCourse = new EventEmitter<string>(); 
   @Output() editCourse = new EventEmitter<string>(); 
   @Output() deleteCourse = new EventEmitter<string>();
-  coursesWithAuthorNames:CourseInfo[] = []; //holds the author names too
 
-  constructor(private mappingService:MappingService) {}
-
-  ngOnChanges(changes:SimpleChanges) {
-    if (changes['courses'] || changes['authors']) {
-      this.coursesWithAuthorNames=this.mappingService.createCoursesWithAuthorNames(this.courses,this.authors)
-    }
-  }
+  constructor() {}
 
   showCourseInfo(courseId:string):void {
     this.showCourse.emit(courseId);

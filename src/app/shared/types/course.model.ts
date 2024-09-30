@@ -6,7 +6,5 @@ export interface Course {
   description:string;
   creationDate:string;
   duration:number;
-  authors:string[];
+  authors: Author[];
 }
-
-export type CourseInfo = Omit<Course, 'creationDate' | 'authors'> & {date:string, authors:Author[]};
