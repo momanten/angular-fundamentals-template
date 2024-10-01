@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder, FormControl, FormGroup,
+  FormArray,
+  FormBuilder, FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators
 } from '@angular/forms';
 import { Author } from '@app/shared/types/author.model';
@@ -21,8 +24,8 @@ export class CourseFormComponent{
   removeIconName:IconNames = IconNames.TrashCan;
   removeIcon: IconProp | undefined = ['fas',this.removeIconName as IconName];
   courseForm!:FormGroup;
-  authors:Author[]=[];
-  courseAuthors: Author[]=[];
+  allAuthors:Author[]=[];
+/*   courseAuthors: Author[]=[]; */
   nonCourseAuthors: Author[]=[];
   submitted:boolean = false;
   wrongCreation:boolean = false;
@@ -36,18 +39,19 @@ export class CourseFormComponent{
     this.courseForm = this.fb.group({
       title: ['',[Validators.required,Validators.minLength(2)]],
       description: ['',[Validators.required,Validators.minLength(2)]],
-      author: ['',[Validators.required,Validators.minLength(2)]],
-      duration: ['',[Validators.required, Validators.min(30)]],
+      author: ['',[Validators.required,Validators.minLength(2),this.authorValidator()]],
+      duration: ['',[Validators.required, Validators.min(0)]],
+      authors: this.fb.array([])  // FormArray
     });
   }
 
   addAuthorToCourse(author:Author):void {
-    this.courseAuthors = [...this.courseAuthors, author];
+    this.authors.push(this.fb.control(author));
     this.nonCourseAuthors = this.nonCourseAuthors.filter((nonCourseAuthor)=>nonCourseAuthor.id != author.id); 
   }
-  removeAuthorFromCourse(author:Author):void {
+  removeAuthorFromCourse(author:Author, arrayIndex:number):void {
     this.nonCourseAuthors = [...this.nonCourseAuthors, author];
-    this.courseAuthors = this.courseAuthors.filter((courseAuthor)=>courseAuthor.id != author.id); 
+    this.authors.removeAt(arrayIndex);
   }
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
   createCourse():void {
@@ -59,7 +63,7 @@ export class CourseFormComponent{
        this.author?.value )
     {
       const newAuthor:Author = {id:this.generateId(), name:this.author!.value};
-      this.authors.push(newAuthor);
+      this.allAuthors.push(newAuthor);
       this.nonCourseAuthors.push(newAuthor);
       this.courseForm.get('author')?.reset();
       this.wrongCreation=false;
@@ -80,6 +84,16 @@ export class CourseFormComponent{
   }
   get author():AbstractControl | null  {
     return this.courseForm.get('author');
+  }
+  get authors(): FormArray {
+    return this.courseForm.get('authors') as FormArray;
+  }
+
+  authorValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid = /^[a-zA-Z0-9\s]+$/.test(control.value);
+      return !valid ? {invalidAuthorCharacter: 'Author name can have only latin characters or numbers'} : null;
+    }
   }
 
   onSubmit():void {

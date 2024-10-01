@@ -24,12 +24,17 @@
         <div class="form__control">
           <label for="password">Password</label>
           <!--Use the name `password` for the form control.-->
-          <input type="password" id="password" name="password" placeholder="Input text" 
-                 required [(ngModel)]="password" #passwordControl="ngModel"
-                 [ngClass]="{invalid:passwordControl.invalid && (passwordControl.touched || loginForm.submitted),
-                             valid:passwordControl.valid && (passwordControl.touched || loginForm.submitted),
-                             init:!passwordControl.touched && !loginForm.submitted}"
-          />
+          <div class="passwordContainer">
+            <input type="{{hideableRef.visible ? 'text' : 'password'}}" id="password" name="password" placeholder="Input text" 
+                   required [(ngModel)]="password" #passwordControl="ngModel" hideable #hideableRef="hideableRef"
+                   [ngClass]="{invalid:passwordControl.invalid && (passwordControl.touched || loginForm.submitted),
+                               valid:passwordControl.valid && (passwordControl.touched || loginForm.submitted),
+                               init:!passwordControl.touched && !loginForm.submitted,
+                               hidden: !hideableRef.visible }"
+
+            />
+            <fa-icon class="icon" (click)="hideableRef.toggle()" [icon]="hideableRef.visible ? visible : hidden"></fa-icon>
+          </div>
           <ng-container *ngIf="passwordControl.touched || loginForm.submitted">
             <ng-container *ngIf="passwordControl.errors?.['required']">
               <span id="emailErrorMessage" class="text-danger">Password is required.</span>
