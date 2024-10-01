@@ -6,7 +6,7 @@
         <div class="form__control">
           <label for="email">Email</label>
           <!--Use the name `email` for the form control.-->
-          <input type="text" id="email" name="email" placeholder="Input text"
+          <input type="text" id="email" name="email" placeholder="Input text" autocomplete="email"
                  emailValidator required [(ngModel)]="email" #emailControl="ngModel"
                  [ngClass]="{invalid:emailControl.invalid && (emailControl.touched || loginForm.submitted),
                              valid:emailControl.valid && (emailControl.touched || loginForm.submitted),

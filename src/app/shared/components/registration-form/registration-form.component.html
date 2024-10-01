@@ -6,7 +6,8 @@
         <div class="form__control">
           <label for="registrationName">Name</label>
           <!--Use the name `name` for the form control.-->
-          <input type="text" id="registrationName" name="name" placeholder="Input text" formControlName="name"
+          <input type="text" id="registrationName" name="name" placeholder="Input text"
+                 formControlName="name" autocomplete="name"
             [ngClass]="{invalid:name?.invalid && (name?.touched || submitted),
                         valid:name?.valid && (name?.touched || submitted),
                         init:!name?.touched && !submitted}"
@@ -23,10 +24,11 @@
         <div class="form__control">
           <!--Use the name `email` for the form control.-->
           <label for="registrationEmail">Email</label>
-          <input type="text" id="registrationEmail" name="email" placeholder="Input text" formControlName="email"
-            [ngClass]="{invalid:email?.invalid && (email?.touched || submitted),
-                        valid:email?.valid && (email?.touched || submitted),
-                        init:!email?.touched && !submitted}"
+          <input type="text" id="registrationEmail" name="email" placeholder="Input text"
+                 formControlName="email" autocomplete="email"
+                 [ngClass]="{invalid:email?.invalid && (email?.touched || submitted),
+                             valid:email?.valid && (email?.touched || submitted),
+                             init:!email?.touched && !submitted}"
           />
           <ng-container *ngIf="email?.touched || submitted">
             <ng-container *ngIf="email?.hasError('required')">
