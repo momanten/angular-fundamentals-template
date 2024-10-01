@@ -1,5 +1,16 @@
-<app-header></app-header>
+<ng-template #loggedInUserHeaderContent>
+  <span>{{user}}</span>
+  <app-button [buttonText]="'Logout'"></app-button>
+</ng-template>
+<ng-template #loggedOutUserHeaderContent>
+  <app-button [buttonText]="'Login'"></app-button>
+</ng-template>
+
+<app-header>
+  <ng-container *ngIf="user.length>0; then loggedInUserHeaderContent; else loggedOutUserHeaderContent"></ng-container>
+</app-header>
 <div class="app-root">
+  <app-courses [courses]="courses"></app-courses>
   <!-- Search component -->
   <!--<app-search></app-search>-->
 

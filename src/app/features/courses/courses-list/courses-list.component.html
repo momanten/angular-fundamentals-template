@@ -1,0 +1,10 @@
+<ng-container *ngFor="let course of courses">
+  <app-course-card (clickOnShow)="showCourseInfo($event)" [editable]="editable" [courseInfo]="course">
+    <ng-container *ngIf="editable; then editableButtons"></ng-container>
+  </app-course-card>
+</ng-container> 
+
+<ng-template #editableButtons>
+    <app-button [iconName]="IconNames.Pencil"></app-button>
+    <app-button [iconName]="IconNames.TrashCan"></app-button>
+</ng-template>
