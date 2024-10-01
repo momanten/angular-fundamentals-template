@@ -7,7 +7,7 @@
       <div class="form__control">
         <label for="title">Title</label>
         <!--Use the name `title` for the form control.-->
-        <input type="text" id="title" placeholder="Input text" formControlName="title" />
+        <input type="text" id="title" name='title' placeholder="Input text" formControlName="title" />
         <ng-container *ngIf="(submitted || title?.touched) && title?.hasError('required')">
           <span id="titleErrorMessage" class="text-danger">Title is required.</span>
         </ng-container>

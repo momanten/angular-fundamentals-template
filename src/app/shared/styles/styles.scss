@@ -60,3 +60,15 @@ $color-border-init-input: rgba($color: #808080, $alpha: 1.0);
   .init {
     border-color: $color-border-init-input
 }
+
+.password-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+
+    &_icon {
+        position: absolute;
+        right: 0.5rem;
+    }
+}

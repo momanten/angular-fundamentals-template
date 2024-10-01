@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '@app/shared/directives/email.directive';
+import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-registration-form',
@@ -15,6 +16,8 @@ export class RegistrationFormComponent {
     password: new FormControl('',[Validators.required]),
   });
   submitted:boolean = false;
+  visible:IconDefinition=faEye;
+  hidden:IconDefinition=faEyeSlash;
 
 
   get name() {

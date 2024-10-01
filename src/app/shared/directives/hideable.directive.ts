@@ -6,7 +6,7 @@ import { Directive } from "@angular/core";
 })
 
 export class HideableDirective {
-  private isVisible: boolean = true;
+  private isVisible: boolean = false;
 
   get visible() {
     return this.isVisible;

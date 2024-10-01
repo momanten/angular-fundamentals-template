@@ -9,19 +9,3 @@
   justify-content: space-between;
 }
 
-.passwordContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-}
-
-.icon {
-  position: absolute;
-  right: 0.5rem;
-}
-
-.hidden {
-  opacity: 0.5;
-}
-
