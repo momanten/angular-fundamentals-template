@@ -1,6 +1,9 @@
 $color-white: #fff;
 $color-gray: #CFCFCF;
 $color-red: #FF0000;
+$color-bg-invalid-input: rgba($color: #ff0000, $alpha: 0.05);
+$color-bg-valid-input: rgba($color: #259d5d, $alpha: 0.1);
+$color-border-init-input: rgba($color: #808080, $alpha: 1.0);
 
 .app-plate {
     width: 100%;
@@ -46,4 +49,14 @@ $color-red: #FF0000;
 
 .text-danger {
     color: red;
+}
+
+.invalid {
+    background-color: $color-bg-invalid-input
+  }
+  .valid {
+    background-color: $color-bg-valid-input
+  }
+  .init {
+    border-color: $color-border-init-input
 }

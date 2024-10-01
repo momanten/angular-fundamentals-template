@@ -1,15 +1,16 @@
 @import 'src/app/shared/styles/styles';
+$input-semi-width : 25vw;
 
 .course {
  min-width: 60vw;
 
   &__flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
 
     & input {
-      flex: 1;
+      width:$input-semi-width;
     }
 
     & app-button {
@@ -21,17 +22,87 @@
     }
   }
 
+  &__authors_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+  }
+
+  &__authors_input {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+  }
+
   &__authors {
     margin-top: 8px;
     display: flex;
+    align-items: center;
+    flex-direction: column;
+    width:35%;
 
-    &-item {
-      margin-right: 10px;
+    &-item_container {
+      display: flex;
+      flex-direction: row;
+      gap:2rem;
+      width:80%;
+    }
+
+    &-item_name {
+      width:80%;
+    }
+    &-item_actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap:2rem;
+      width:20%;
+
+      & span {
+        cursor:pointer;
+      }   
     }
   }
+
+  &__authors_list {
+    display: flex;
+    flex-direction: column;
+
+    &-item_container {
+      display: flex;
+      flex-direction: row;
+      width: $input-semi-width;
+    }
+
+    &-item_name {
+      width:80%;
+    }
+    &-item_actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap:2rem;
+      width:20%;
+
+      & span {
+        cursor:pointer;
+      }    
+    }
+  }
+
 
   &__icon {
     margin-left: 4px;
     cursor: pointer;
   }
+}
+
+.form__actions {
+  display: flex;
+  flex-direction: row-reverse;
+  gap:0.5rem;
+  position: relative;
+  left:64px;
+  align-items: center;
 }

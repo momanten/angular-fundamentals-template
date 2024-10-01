@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UtilityService } from '@app/services/utility.service';
 import type { CourseInfo } from '@app/shared/types/course.model';
 
 @Component({
@@ -9,22 +8,9 @@ import type { CourseInfo } from '@app/shared/types/course.model';
 })
 export class CourseCardComponent {
 
-
   @Input() editable:boolean=false;
   @Input() courseInfo!:CourseInfo;
   @Output() clickOnShow = new EventEmitter<string>(); 
-
-  constructor(private utilityService: UtilityService) {}
-
-  get authorNames():string {
-    return this.utilityService.authorsToString(this.courseInfo.authors);
-  }
-  get durationInHours():string {
-    return this.utilityService.durationInHoursString(this.courseInfo.duration);
-  }
-  get dateSeparatedWithDots(): string {
-    return this.utilityService.formatDateWithDots(this.courseInfo.date);
-  }
 
   showCourseInfo() {
     this.clickOnShow.emit(this.courseInfo.id);

@@ -10,10 +10,10 @@
             <div class="course-card__info-text">
                 <div>
                   <b>Authors: </b>
-                  {{ authorNames }}
+                  {{ courseInfo.authors | joinify:', ' }}
                 </div>
-                <div><b>Duration: </b><span class="course-card__duration">{{durationInHours}}</span></div>
-                <div><b>Created: </b><span class="course-card__date">{{dateSeparatedWithDots}}</span></div>
+                <div><b>Duration: </b><span class="course-card__duration">{{courseInfo.duration | duration}}</span></div>
+                <div><b>Created: </b><span class="course-card__date">{{courseInfo.date | customDate}}</span></div>
             </div>
             <div class="course-card__info-actions">
                 <app-button (click)="showCourseInfo()" [buttonText]="'Show Course'"></app-button>

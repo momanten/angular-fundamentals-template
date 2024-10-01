@@ -12,6 +12,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 export class ButtonComponent implements OnChanges{
   @Input() buttonText?:string;
   @Input() iconName?:IconNames;
+  @Input() type?:'submit'|'button'= 'button';
   icon: IconProp | undefined;
   
   constructor(private library: FaIconLibrary) {
