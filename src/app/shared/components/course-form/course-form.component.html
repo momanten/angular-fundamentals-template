@@ -53,19 +53,21 @@
       <div class="course__authors_container">
         <div class="course__authors_input">
           <h3>Authors</h3>
-          <div class="form__control">
-            <div class="course__flex">
-              <input type="text" id="author" placeholder="Input Author Name" formControlName="author"/>
-              <app-button (click)="addAuthor()" id="createAuthor" [buttonText]="'Create Author'"></app-button>
-            </div>
-            <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('minlength') || author?.hasError('required')); else invalidCharacterMessage">
-              <span id="authorErrorMessage" class="text-danger">Author must be minimum 2 characters long.</span>
-            </ng-container>
-            <ng-template  #invalidCharacterMessage>
-              <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('invalidAuthorCharacter'))">
-                <span id="authorErrorMessage" class="text-danger">Author must contain only latin characters and numbers.</span>
+          <div formGroupName="newAuthor">
+            <div class="form__control">
+              <div class="course__flex">
+                <input type="text" id="author" placeholder="Input Author Name" formControlName="author"/>
+                <app-button (click)="addAuthor()" id="createAuthor" [buttonText]="'Create Author'"></app-button>
+              </div>
+              <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('minlength') || author?.hasError('required')); else invalidCharacterMessage">
+                <span id="authorErrorMessage" class="text-danger">Author must be minimum 2 characters long.</span>
               </ng-container>
-            </ng-template>
+              <ng-template  #invalidCharacterMessage>
+                <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('invalidAuthorCharacter'))">
+                  <span id="authorErrorMessage" class="text-danger">Author must contain only latin characters and numbers.</span>
+                </ng-container>
+              </ng-template>
+            </div>
           </div>
         </div>
         <div class="course__authors">

@@ -39,7 +39,9 @@ export class CourseFormComponent{
     this.courseForm = this.fb.group({
       title: ['',[Validators.required,Validators.minLength(2)]],
       description: ['',[Validators.required,Validators.minLength(2)]],
-      author: ['',[Validators.required,Validators.minLength(2),this.authorValidator()]],
+      newAuthor: this.fb.group({
+        author: ['',[Validators.required, Validators.minLength(2), this.authorValidator()]]
+      }),
       duration: ['',[Validators.required, Validators.min(0)]],
       authors: this.fb.array([])  // FormArray
     });
@@ -83,7 +85,7 @@ export class CourseFormComponent{
     return this.courseForm.get('duration');
   }
   get author():AbstractControl | null  {
-    return this.courseForm.get('author');
+    return this.courseForm.get('newAuthor.author');
   }
   get authors(): FormArray {
     return this.courseForm.get('authors') as FormArray;
