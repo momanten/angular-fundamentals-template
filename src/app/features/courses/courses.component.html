@@ -7,7 +7,7 @@
   <ng-container *ngIf="courses.length>0; else emptyList" >
     <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search> 
     <ng-container *ngIf="notFound">
-      <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} -> All courses are shown</span>
+      <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
     </ng-container>
     <app-courses-list (showCourse)="handleShowCourseInfo($event)" [editable]="true" [courses]="filteredCourses"></app-courses-list>
   </ng-container>
