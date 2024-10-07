@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonTypes } from '@app/shared/types/button.type';
 
 @Component({
   selector: 'app-search',
@@ -6,14 +7,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
+
+  ButtonTypes = ButtonTypes;
+
   // Use the name `placeholder` for the @Input.
   // Use the name `search` for the @Output.
   @Input() placeholder:string = 'Search...';
-  @Output() search = new EventEmitter<{searchText:string, searched:boolean}>();
+  @Output() search = new EventEmitter<string>();
   searchString:string='';
 
   searchCourse():void {
-    this.search.emit({searchText:this.searchString, searched:true});
+    this.search.emit(this.searchString);
   }
 }
 

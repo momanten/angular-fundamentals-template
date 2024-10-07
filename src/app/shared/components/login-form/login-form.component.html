@@ -26,13 +26,13 @@
           <label for="password">Password</label>
           <!--Use the name `password` for the form control.-->
           <div class="password-container">
-            <input type="{{hideableRef.visible ? 'text' : 'password'}}" id="password" name="password" placeholder="Input text" 
+            <input id="password" name="password" placeholder="Input text" 
                    required [(ngModel)]="password" #passwordControl="ngModel" hideable #hideableRef="hideableRef"
                    [ngClass]="{invalid:passwordControl.invalid && (passwordControl.touched || loginForm.submitted),
                                valid:passwordControl.valid && (passwordControl.touched || loginForm.submitted),
                                init:!passwordControl.touched && !loginForm.submitted}"
             />
-            <fa-icon class="password-container_icon" (click)="hideableRef.toggle()" [icon]="hideableRef.visible ? visible : hidden"></fa-icon>
+            <app-icon class="password-container_icon" (click)="hideableRef.toggle()" [iconName]="hideableRef.visible ? IconNames.Visible : IconNames.Hidden"></app-icon>
           </div>
           <ng-container *ngIf="passwordControl.touched || loginForm.submitted">
             <ng-container *ngIf="passwordControl.errors?.['required']">
@@ -44,7 +44,7 @@
       </div>
       <div>
         <div class="form__action">
-          <app-button [type]="'submit'" buttonText="Login"></app-button>
+          <app-button [type]="ButtonTypes.Submit" buttonText="Login"></app-button>
         </div>
         <div class="form__text">
           If you don't have an account you may do <strong>Registration</strong>

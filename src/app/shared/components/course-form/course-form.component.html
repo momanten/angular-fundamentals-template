@@ -39,14 +39,14 @@
         <div class="course__flex">
           <input type="number" id="duration" placeholder="Minutes..." formControlName="duration"/>
           <div class="course__duration">
-            {{ duration?.value ? (duration?.value | duration) : (0 | duration) }}
+            {{ duration!.value | duration }}
           </div>
         </div>
         <ng-container *ngIf="(submitted || duration?.touched) && duration?.hasError('required')">
           <span id="durationErrorMessage" class="text-danger">Duration is required.</span>
         </ng-container>
         <ng-container *ngIf="(submitted || duration?.touched) && duration?.hasError('min')">
-          <span id="durationErrorMessage" class="text-danger">Duration must be minimum half hour.</span>
+          <span id="durationErrorMessage" class="text-danger">Duration must be minimum 1 minute.</span>
         </ng-container>
       </div>
 
@@ -57,14 +57,14 @@
             <div class="form__control">
               <div class="course__flex">
                 <input type="text" id="author" placeholder="Input Author Name" formControlName="author"/>
-                <app-button (click)="addAuthor()" id="createAuthor" [buttonText]="'Create Author'"></app-button>
+                <app-button [type]="ButtonTypes.Button" (click)="addAuthor()" id="createAuthor" [buttonText]="'Create Author'"></app-button>
               </div>
               <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('minlength') || author?.hasError('required')); else invalidCharacterMessage">
                 <span id="authorErrorMessage" class="text-danger">Author must be minimum 2 characters long.</span>
               </ng-container>
               <ng-template  #invalidCharacterMessage>
                 <ng-container *ngIf="(wrongCreation && author?.touched) && (author?.hasError('invalidAuthorCharacter'))">
-                  <span id="authorErrorMessage" class="text-danger">Author must contain only latin characters and numbers.</span>
+                  <span id="authorErrorMessage" class="text-danger">{{author?.getError('invalidAuthorCharacter')}}</span>
                 </ng-container>
               </ng-template>
             </div>
@@ -82,7 +82,7 @@
                   <div class="course__authors-item_name">{{author.value?.name}}</div>
                   <div class="course__authors-item_actions">
                     <span (click)="removeAuthorFromCourse(author.value, i)">
-                      <fa-icon [icon]="removeIcon!"></fa-icon>
+                      <app-icon [iconName]="IconNames.TrashCan"></app-icon>
                     </span>
                   </div>
                 </div>
@@ -100,9 +100,9 @@
             <div class="course__authors_list-item_name">{{author.name}}</div>
             <div class="course__authors_list-item_actions">
               <span (click)="addAuthorToCourse({id:author.id, name:author.name})">+</span>
-<!-- Not needed yet <span>
-                <fa-icon [icon]="removeIcon!"></fa-icon>
-              </span> -->
+              <span>
+                <app-icon [iconName]="IconNames.TrashCan"></app-icon>
+              </span>
             </div>
           </div>
         </ng-container>
@@ -111,10 +111,10 @@
   </div>
   <div class="form__actions">
     <div class="form__action">
-      <app-button (click)="createCourse()" [type]="'submit'" [buttonText]="'Create Course'"></app-button>
+      <app-button (click)="createCourse()" [type]="ButtonTypes.Submit" [buttonText]="'Create Course'"></app-button>
     </div>
     <div class="form__action">
-      <app-button (click)="cancelCourse()" [buttonText]="'Cancel'"></app-button>
+      <app-button (click)="cancelCourse()" [type]="ButtonTypes.Button" [buttonText]="'Cancel'"></app-button>
     </div>
   </div>
 </form>

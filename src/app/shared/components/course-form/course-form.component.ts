@@ -8,10 +8,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Author } from '@app/shared/types/author.model';
+import { ButtonTypes } from '@app/shared/types/button.type';
 import { IconNames } from '@app/shared/types/icons.model';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { IconName, IconProp } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -21,17 +19,17 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent{
-  removeIconName:IconNames = IconNames.TrashCan;
-  removeIcon: IconProp | undefined = ['fas',this.removeIconName as IconName];
+
+  ButtonTypes = ButtonTypes;
+  IconNames = IconNames;
+  
   courseForm!:FormGroup;
   allAuthors:Author[]=[];
-/*   courseAuthors: Author[]=[]; */
   nonCourseAuthors: Author[]=[];
   submitted:boolean = false;
   wrongCreation:boolean = false;
 
-  constructor(public fb: FormBuilder, public library: FaIconLibrary) {
-    library.addIconPacks(fas);
+  constructor(public fb: FormBuilder) {
     this.buildForm();
   }
 
@@ -42,7 +40,7 @@ export class CourseFormComponent{
       newAuthor: this.fb.group({
         author: ['',[Validators.required, Validators.minLength(2), this.authorValidator()]]
       }),
-      duration: ['',[Validators.required, Validators.min(0)]],
+      duration: ['',[Validators.required, Validators.min(1)]],
       authors: this.fb.array([])  // FormArray
     });
   }

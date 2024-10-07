@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '@app/shared/directives/email.directive';
-import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { ButtonTypes } from '@app/shared/types/button.type';
+import { IconNames } from '@app/shared/types/icons.model';
 
 @Component({
   selector: 'app-registration-form',
@@ -9,6 +10,10 @@ import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-i
   styleUrls: ['./registration-form.component.scss'],
 })
 export class RegistrationFormComponent {
+
+  ButtonTypes = ButtonTypes;
+  IconNames = IconNames;
+
   // Use the names `name`, `email`, `password` for the form controls.
   registrationForm = new FormGroup({
     name: new FormControl('',[Validators.required,Validators.minLength(6)]),
@@ -16,8 +21,6 @@ export class RegistrationFormComponent {
     password: new FormControl('',[Validators.required]),
   });
   submitted:boolean = false;
-  visible:IconDefinition=faEye;
-  hidden:IconDefinition=faEyeSlash;
 
 
   get name() {

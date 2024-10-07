@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonTypes } from '@app/shared/types/button.type';
 import { CourseInfo } from '@app/shared/types/course.model';
 
 @Component({
@@ -7,6 +8,8 @@ import { CourseInfo } from '@app/shared/types/course.model';
   styleUrls: ['./course-info.component.scss']
 })
 export class CourseInfoComponent {
+
+  ButtonTypes = ButtonTypes;
 
   @Input() course!:CourseInfo;
   @Output() showCourseList = new EventEmitter();

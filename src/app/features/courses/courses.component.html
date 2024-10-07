@@ -6,13 +6,16 @@
 <ng-template #courseList>
   <ng-container *ngIf="courses.length>0; else emptyList" >
     <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search> 
-    <app-courses-list (showCourse)="handleShowCourseInfo($event)" [editable]="true" [courses]="searchedCourses.length > 0 ? searchedCourses : courses"></app-courses-list>
+    <ng-container *ngIf="notFound">
+      <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} -> All courses are shown</span>
+    </ng-container>
+    <app-courses-list (showCourse)="handleShowCourseInfo($event)" [editable]="true" [courses]="filteredCourses"></app-courses-list>
   </ng-container>
 </ng-template>
 
 <ng-template #emptyList>
   <app-info [title]="emptyListTitle" [text]="emptyListText">
-    <app-button [buttonText]="'ADD NEW COURSE'"></app-button>
+    <app-button [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
   </app-info>
 </ng-template>
 

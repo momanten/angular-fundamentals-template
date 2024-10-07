@@ -18,10 +18,12 @@ import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
 import { JoinifyPipe } from './pipes/joinify.pipe';
 import { HideableDirective } from './directives/hideable.directive';
+import { IconComponent } from './components/icon/icon.component';
 
 const components = [
   HeaderComponent,
   ButtonComponent,
+  IconComponent,
   InfoComponent,
   SearchComponent,
   ModalComponent,

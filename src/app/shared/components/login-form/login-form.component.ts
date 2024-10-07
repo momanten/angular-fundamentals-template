@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { ButtonTypes } from '@app/shared/types/button.type';
+import { IconNames } from '@app/shared/types/icons.model';
 
 @Component({
   selector: 'app-login-form',
@@ -8,14 +9,15 @@ import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-i
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent{
+  
+  ButtonTypes = ButtonTypes;
+  IconNames = IconNames;
+
   @ViewChild("loginForm") public loginForm!: NgForm;
   //Use the names `email` and `password` for form controls.
   email:string ='';
   password:string='';
   submitted='false';
-  visible:IconDefinition=faEye;
-  hidden:IconDefinition=faEyeSlash;
-
 
   onSubmit() {}
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonTypes } from '@app/shared/types/button.type';
 import type { CourseInfo } from '@app/shared/types/course.model';
 
 @Component({
@@ -7,6 +8,8 @@ import type { CourseInfo } from '@app/shared/types/course.model';
   styleUrls: ['./course-card.component.scss']
 })
 export class CourseCardComponent {
+
+  ButtonTypes = ButtonTypes;
 
   @Input() editable:boolean=false;
   @Input() courseInfo!:CourseInfo;

@@ -1,4 +1,4 @@
 <div class="app-search">
   <input type="text" id="searchInput" name="searchInput" placeholder="{{placeholder}}" [(ngModel)]="searchString" >
-  <app-button (click)="searchCourse()" buttonText="Search"></app-button>
+  <app-button [type]="ButtonTypes.Button" (click)="searchCourse()" buttonText="Search"></app-button>
 </div>
