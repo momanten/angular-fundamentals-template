@@ -1,25 +1,54 @@
-import { Component, Input } from '@angular/core';
-import { CourseInfo } from '@app/shared/types/course.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { ButtonTypes } from "@app/shared/types/button.type";
+import { CourseInfo } from "@app/shared/types/course.model";
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss']
+  selector: "app-courses",
+  templateUrl: "./courses.component.html",
+  styleUrls: ["./courses.component.scss"],
 })
-export class CoursesComponent {
-  @Input() courses:CourseInfo[]=[];
-  
-  courseInfo:CourseInfo|undefined=undefined;
+export class CoursesComponent implements OnInit {
+  ButtonTypes = ButtonTypes;
 
-  readonly emptyListTitle = 'Your List is Empty';
-  readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
+  @Input() courses: CourseInfo[] = [];
 
-  handleShowCourseInfo(courseId:string) {
-    this.courseInfo = this.courses.find((course)=>course.id===courseId);
+  courseInfo: CourseInfo | undefined = undefined;
+  filteredCourses: CourseInfo[] = [];
+  lastSearchedText = "";
+  notFound = false;
+
+  ngOnInit() {
+    this.filteredCourses = this.courses;
   }
 
-  handleShowCourses():void {
+  readonly emptyListTitle = "Your List is Empty";
+  readonly emptyListText =
+    "Please use 'ADD NEW COURSE' button to add your first course";
+
+  handleShowCourseInfo(courseId: string) {
+    this.courseInfo = this.courses.find((course) => course.id === courseId);
+  }
+  handleShowCourses(): void {
     this.courseInfo = undefined;
   }
-
+  handleSearch(searchText: string): void {
+    this.lastSearchedText = searchText;
+    if (searchText.length > 0) {
+      if (
+        this.courses.filter((course) => course.title.includes(searchText))
+          .length > 0
+      ) {
+        this.notFound = false;
+        this.filteredCourses = this.courses.filter((course) =>
+          course.title.includes(searchText),
+        );
+      } else {
+        this.notFound = true;
+        this.filteredCourses = this.courses;
+      }
+    } else {
+      this.notFound = false;
+      this.filteredCourses = this.courses;
+    }
+  }
 }

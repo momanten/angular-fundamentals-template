@@ -1,9 +1,9 @@
 <ng-template #loggedInUserHeaderContent>
   <span>{{user}}</span>
-  <app-button [buttonText]="'Logout'"></app-button>
+  <app-button  [type]="ButtonTypes.Button" [buttonText]="'Logout'"></app-button>
 </ng-template>
 <ng-template #loggedOutUserHeaderContent>
-  <app-button [buttonText]="'Login'"></app-button>
+  <app-button [type]="ButtonTypes.Button" [buttonText]="'Login'"></app-button>
 </ng-template>
 
 <app-header>
@@ -11,6 +11,9 @@
 </app-header>
 <div class="app-root">
   <app-courses [courses]="courses"></app-courses>
+  <app-login-form></app-login-form>
+  <app-registration-form></app-registration-form>
+  <app-course-form></app-course-form>
   <!-- Search component -->
   <!--<app-search></app-search>-->
 

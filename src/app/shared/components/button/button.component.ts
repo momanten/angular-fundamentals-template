@@ -1,29 +1,16 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { IconNames } from '@app/shared/types/icons.model';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { IconName, IconProp } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input } from "@angular/core";
+import { ButtonTypes } from "@app/shared/types/button.type";
 
 @Component({
-  selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  selector: "app-button",
+  templateUrl: "./button.component.html",
+  styleUrls: ["./button.component.scss"],
 })
-export class ButtonComponent implements OnChanges{
-  @Input() buttonText?:string;
-  @Input() iconName?:IconNames;
-  icon: IconProp | undefined;
-  
-  constructor(private library: FaIconLibrary) {
-    this.library.addIconPacks(fas);
-  }
+export class ButtonComponent {
+  ButtonTypes = ButtonTypes;
 
-  ngOnChanges() {
-    if (this.iconName) {
-      this.icon = ['fas',this.iconName as IconName]; 
-    }
-    else this.icon = undefined;
-  }
+  @Input() buttonText?: string;
+  @Input() type?: ButtonTypes = ButtonTypes.Button;
 
   // Use the names for the inputs `buttonText` and `iconName`.
 }
