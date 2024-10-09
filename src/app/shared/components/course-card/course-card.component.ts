@@ -16,6 +16,5 @@ export class CourseCardComponent {
 
   showCourseInfo() {
     this.clickOnShow.emit(this.courseInfo.id);
-    console.log("Clicked in course Card");
   }
 }

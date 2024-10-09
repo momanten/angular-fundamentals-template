@@ -54,7 +54,7 @@ export class CourseFormComponent {
   addAuthorToCourse(author: Author): void {
     this.authors.push(this.fb.control(author));
     this.nonCourseAuthors = this.nonCourseAuthors.filter(
-      (nonCourseAuthor) => nonCourseAuthor.id != author.id,
+      (nonCourseAuthor) => nonCourseAuthor.id !== author.id,
     );
   }
   removeAuthorFromCourse(author: Author, arrayIndex: number): void {

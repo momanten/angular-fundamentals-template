@@ -19,7 +19,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.filteredCourses = this.courses;
-    console.log("filtered", this.filteredCourses);
   }
 
   readonly emptyListTitle = "Your List is Empty";

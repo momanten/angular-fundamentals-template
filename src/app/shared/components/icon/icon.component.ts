@@ -8,8 +8,6 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
   styleUrls: ["./icon.component.css"],
 })
 export class IconComponent {
-  /* IconNames=IconNames; */
-
   @Input() iconName: IconNames = IconNames.Pencil;
 
   get icon(): IconProp {
