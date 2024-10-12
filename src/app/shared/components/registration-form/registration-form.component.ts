@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "@app/auth/services/auth.service";
 import { emailValidator } from "@app/shared/directives/email.directive";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { IconNames } from "@app/shared/types/icons.model";
@@ -12,6 +13,8 @@ import { IconNames } from "@app/shared/types/icons.model";
 export class RegistrationFormComponent {
   ButtonTypes = ButtonTypes;
   IconNames = IconNames;
+
+  constructor(private authService: AuthService) {}
 
   // Use the names `name`, `email`, `password` for the form controls.
   registrationForm = new FormGroup({
@@ -33,5 +36,12 @@ export class RegistrationFormComponent {
 
   onSubmit() {
     this.submitted = true;
+    this.authService
+      .register({
+        name: this.name?.value || "",
+        email: this.email?.value || "",
+        password: this.password?.value || "",
+      })
+      .subscribe(result => console.log("Registration", result));
   }
 }

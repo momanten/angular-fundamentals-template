@@ -1,32 +1,120 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
+import { SessionStorageService } from "./session-storage.service";
+import {
+  APIResult,
+  LoginResponse,
+  LoginUser,
+  LogoutResponse,
+  ResgistrationResponse,
+  User,
+} from "../auth.models";
+
+const ADMIN_EMAIL = "admin@email.com";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  login(user: any) {
-    // replace 'any' with the required interface
-    // Add your code here
+  private isAuthorized$$ = new BehaviorSubject<boolean>(false);
+  public isAuthorized$: Observable<boolean> =
+    this.isAuthorized$$.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    private sessionStorage: SessionStorageService
+  ) {}
+
+  login(user: LoginUser): Observable<APIResult> {
+    return this.http.post<LoginResponse>(this.getLoginUrl(), user).pipe(
+      map(response => {
+        const token = response?.result;
+        let userName = "";
+        if (response.user.email === ADMIN_EMAIL) userName = "Admin";
+        else userName = response?.user.name;
+        if (token && userName) {
+          this.sessionStorage.setToken(token);
+          this.sessionStorage.setUserName(userName);
+          this.isAuthorized$$.next(true);
+          return { result: true, email: user.email };
+        } else {
+          this.isAuthorized$$.next(false);
+          return {
+            result: false,
+            error: "Token is missing from server",
+          };
+        }
+      }),
+      catchError(err => {
+        throw "Login failed: " + JSON.stringify(err.error.result);
+      })
+    );
   }
 
-  logout() {
-    // Add your code here
+  logout(): Observable<APIResult> {
+    const token = this.sessionStorage.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+    console.error("logout auth", token, headers);
+
+    return this.http
+      .delete<LogoutResponse>(this.getLogoutUrl(), { headers })
+      .pipe(
+        map(() => {
+          this.sessionStorage.deleteToken();
+          this.sessionStorage.deleteUserName();
+          this.isAuthorized$$.next(false);
+          return {
+            result: true,
+          };
+        }),
+        catchError(error => {
+          return of({
+            result: false,
+            error: error?.message || "Unknown error",
+          });
+        })
+      );
   }
 
-  register(user: any) {
-    // replace 'any' with the required interface
-    // Add your code here
+  register(user: User): Observable<APIResult> {
+    return this.http
+      .post<ResgistrationResponse>(this.getRegistrationUrl(), user)
+      .pipe(
+        map((response: ResgistrationResponse) => {
+          return {
+            result: response.successful,
+            error: response.errors[0],
+          };
+        }),
+        catchError(error => {
+          return of({
+            result: false,
+            error: error?.message || "Unknown error",
+          });
+        })
+      );
   }
 
   get isAuthorised() {
-    // Add your code here. Get isAuthorized$$ value
+    return this.isAuthorized$$.getValue();
   }
 
   set isAuthorised(value: boolean) {
-    // Add your code here. Change isAuthorized$$ value
+    this.isAuthorized$$.next(value);
   }
 
   getLoginUrl() {
-    // Add your code here
+    return "http://localhost:4000/login";
+  }
+
+  getRegistrationUrl() {
+    return "http://localhost:4000/register";
+  }
+
+  getLogoutUrl() {
+    return "http://localhost:4000/logout";
   }
 }

@@ -1,13 +1,13 @@
 <ng-template #loggedInUserHeaderContent>
   <span>{{user}}</span>
-  <app-button  [type]="ButtonTypes.Button" [buttonText]="'Logout'"></app-button>
+  <app-button  (click)="onLogout()" [type]="ButtonTypes.Button" [buttonText]="'Logout'"></app-button>
 </ng-template>
 <ng-template #loggedOutUserHeaderContent>
-  <app-button [type]="ButtonTypes.Button" [buttonText]="'Login'"></app-button>
+  <app-button (click)="onLogin()" [type]="ButtonTypes.Button" [buttonText]="'Login'"></app-button>
 </ng-template>
 
 <app-header>
-  <ng-container *ngIf="user.length>0; then loggedInUserHeaderContent; else loggedOutUserHeaderContent"></ng-container>
+  <ng-container *ngIf="isAuth(); then loggedInUserHeaderContent; else loggedOutUserHeaderContent"></ng-container>
 </app-header>
 <div class="app-root">
   <router-outlet></router-outlet>

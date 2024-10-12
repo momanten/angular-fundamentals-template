@@ -11,6 +11,4 @@ export class ButtonComponent {
 
   @Input() buttonText?: string;
   @Input() type?: ButtonTypes = ButtonTypes.Button;
-
-  // Use the names for the inputs `buttonText` and `iconName`.
 }

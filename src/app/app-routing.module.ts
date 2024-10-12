@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
+import { NotAuthorizedGuard } from "./auth/guards/not-authorized.guard";
 
 export const routes: Routes = [
   {
@@ -11,6 +12,7 @@ export const routes: Routes = [
     path: "login",
     loadChildren: () =>
       import("./features/login/login.module").then(m => m.LoginModule),
+    canActivate: [NotAuthorizedGuard],
   },
   {
     path: "registration",
@@ -18,6 +20,7 @@ export const routes: Routes = [
       import("./features/registration/registration.module").then(
         m => m.RegistrationModule
       ),
+    canActivate: [NotAuthorizedGuard],
   },
   {
     path: "courses",
@@ -26,7 +29,7 @@ export const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "login",
+    redirectTo: "courses",
   },
 ];
 

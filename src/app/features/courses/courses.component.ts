@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { CoursesStoreService } from "@app/services/courses-store.service";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { CourseInfo } from "@app/shared/types/course.model";
 
@@ -17,8 +18,11 @@ export class CoursesComponent implements OnInit {
   lastSearchedText = "";
   notFound = false;
 
+  constructor(private courseStore: CoursesStoreService) {}
+
   ngOnInit() {
     this.filteredCourses = this.courses;
+    this.courseStore.getAll();
   }
 
   readonly emptyListTitle = "Your List is Empty";
@@ -26,7 +30,7 @@ export class CoursesComponent implements OnInit {
     "Please use 'ADD NEW COURSE' button to add your first course";
 
   handleShowCourseInfo(courseId: string) {
-    this.courseInfo = this.courses.find((course) => course.id === courseId);
+    this.courseInfo = this.courses.find(course => course.id === courseId);
   }
   handleShowCourses(): void {
     this.courseInfo = undefined;
@@ -35,12 +39,12 @@ export class CoursesComponent implements OnInit {
     this.lastSearchedText = searchText;
     if (searchText.length > 0) {
       if (
-        this.courses.filter((course) => course.title.includes(searchText))
+        this.courses.filter(course => course.title.includes(searchText))
           .length > 0
       ) {
         this.notFound = false;
-        this.filteredCourses = this.courses.filter((course) =>
-          course.title.includes(searchText),
+        this.filteredCourses = this.courses.filter(course =>
+          course.title.includes(searchText)
         );
       } else {
         this.notFound = true;
