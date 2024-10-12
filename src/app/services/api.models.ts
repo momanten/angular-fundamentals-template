@@ -1,3 +1,4 @@
+import { User } from "@app/auth/auth.models";
 import { Author } from "@app/shared/types/author.model";
 import { Course } from "@app/shared/types/course.model";
 
@@ -40,4 +41,8 @@ export interface FilterResponse {
 export interface AllAuthorsResponse {
   successful: boolean;
   result: Author[];
+}
+export interface UserResponse {
+  successful: boolean;
+  result: Omit<User, "password">;
 }

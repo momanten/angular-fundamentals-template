@@ -11,8 +11,6 @@ import {
   User,
 } from "../auth.models";
 
-const ADMIN_EMAIL = "admin@email.com";
-
 @Injectable({
   providedIn: "root",
 })
@@ -30,12 +28,8 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.getLoginUrl(), user).pipe(
       map(response => {
         const token = response?.result;
-        let userName = "";
-        if (response.user.email === ADMIN_EMAIL) userName = "Admin";
-        else userName = response?.user.name;
-        if (token && userName) {
+        if (token) {
           this.sessionStorage.setToken(token);
-          this.sessionStorage.setUserName(userName);
           this.isAuthorized$$.next(true);
           return { result: true, email: user.email };
         } else {

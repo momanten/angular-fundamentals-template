@@ -12,6 +12,7 @@ import { routes } from "./app-routing.module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AuthModule } from "./auth/auth.module";
 import { TokenInterceptor } from "./auth/interceptors/token.interceptor";
+import { AdminGuard } from "./user/guards/admin.guard";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { TokenInterceptor } from "./auth/interceptors/token.interceptor";
     AuthModule,
   ],
   providers: [
+    AdminGuard,
     AuthorizedGuard,
     NotAuthorizedGuard,
     CoursesService,

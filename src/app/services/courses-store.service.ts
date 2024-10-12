@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Course, FilterCourse } from "@app/shared/types/course.model";
-import { BehaviorSubject, filter, Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { CoursesService } from "./courses.service";
 import {
   AllAuthorsResponse,
