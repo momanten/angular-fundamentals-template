@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormArray,
@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 import { CoursesStoreService } from "@app/services/courses-store.service";
 import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
-import { Course } from "@app/shared/types/course.model";
+import { Course, CourseInfo } from "@app/shared/types/course.model";
 import { IconNames } from "@app/shared/types/icons.model";
 import { Subscription } from "rxjs";
 
@@ -25,22 +25,30 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
   IconNames = IconNames;
 
+  @Input() isUpdate = false;
+  @Input() courseInfo?: CourseInfo;
+
   courseForm!: FormGroup;
   private authorsSubscription: Subscription | undefined;
   private allAuthors: Author[] = [];
   nonCourseAuthors: Author[] = [];
   submitted = false;
   wrongCreation = false;
+  actionText = "CREATE COURSE";
 
   constructor(
     public fb: FormBuilder,
     private router: Router,
     private courseStore: CoursesStoreService
-  ) {
-    this.buildForm();
-  }
+  ) {}
 
   ngOnInit() {
+    if (this.isUpdate) this.updateInit();
+    else this.createInit();
+  }
+
+  createInit() {
+    this.buildForm();
     this.authorsSubscription = this.courseStore.authors$.subscribe(authors$ => {
       this.allAuthors = authors$;
       this.nonCourseAuthors = this.allAuthors.filter(
@@ -50,16 +58,28 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       console.log("AllAuthors", this.allAuthors, this.nonCourseAuthors);
     });
   }
+  updateInit() {
+    this.actionText = "UPDATE COURSE";
+    this.authorsSubscription = this.courseStore.authors$.subscribe(authors$ => {
+      this.allAuthors = authors$;
+      this.nonCourseAuthors = this.allAuthors.filter(
+        authorAllElement =>
+          !this.courseInfo?.authors.some((authorElement: Author) => authorElement.id === authorAllElement.id)
+      );
+      console.log("AllAuthors", this.allAuthors, this.nonCourseAuthors);
+    });
+    this.buildForm();
+  }
 
   buildForm(): void {
     this.courseForm = this.fb.group({
-      title: ["", [Validators.required, Validators.minLength(2)]],
-      description: ["", [Validators.required, Validators.minLength(2)]],
+      title: [this.courseInfo?.title || "", [Validators.required, Validators.minLength(2)]],
+      description: [this.courseInfo?.description || "", [Validators.required, Validators.minLength(2)]],
       newAuthor: this.fb.group({
         author: ["", [Validators.minLength(2), this.authorValidator()]],
       }),
-      duration: ["", [Validators.required, Validators.min(1)]],
-      authors: this.fb.array([]), // FormArray
+      duration: [this.courseInfo?.duration || "", [Validators.required, Validators.min(1)]],
+      authors: this.fb.array(this.courseInfo?.authors || []), // FormArray
     });
   }
 
@@ -81,6 +101,19 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     };
     this.courseStore.createCourse(course);
   }
+  updateCourse(): void {
+    const course: Omit<Course, "id"> = {
+      title: this.title?.value,
+      description: this.description?.value,
+      duration: this.duration?.value,
+      authors: this.authors?.value.map((author: Author) => author.id),
+      creationDate: this.courseInfo?.date,
+    };
+    if (this.courseInfo?.id) {
+      this.courseStore.editCourse(this.courseInfo.id, course);
+    }
+  }
+
   cancelCourse(): void {
     this.router.navigate(["../"]);
   }
@@ -130,7 +163,9 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.isRequiredFieldsValid()) {
       console.log("Valid Form");
-      this.createCourse();
+      if (this.isUpdate) {
+        this.updateCourse();
+      } else this.createCourse();
       this.router.navigate(["../"]);
     }
   }
