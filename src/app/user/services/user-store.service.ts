@@ -20,10 +20,12 @@ export class UserStoreService {
       next: response => {
         if (response.result.email === ADMIN_EMAIL) {
           this.isAdmin$$.next(true);
+          this.name$$.next("Admin");
         } else {
           this.isAdmin$$.next(false);
+          this.name$$.next(response.result.name);
         }
-        this.name$$.next(response.result.name);
+        console.log("isAdminSet", this.name$$.value, this.isAdmin$$.value);
       },
     });
   }

@@ -17,7 +17,7 @@
             </div>
             <div class="course-card__info-actions">
                 <app-button [type]="ButtonTypes.Button" (click)="showCourseInfo()" [buttonText]="'Show Course'"></app-button>
-                <div class="course-card__buttons">
+                <div *ngIf="isAdmin$ | async" class="course-card__buttons">
                     <!--Enter your code here-->
                     <ng-content></ng-content>
                 </div>

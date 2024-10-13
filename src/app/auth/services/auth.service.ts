@@ -10,7 +10,10 @@ import {
   ResgistrationResponse,
   User,
 } from "../auth.models";
-import { UserStoreService } from "@app/user/services/user-store.service";
+import {
+  ADMIN_EMAIL,
+  UserStoreService,
+} from "@app/user/services/user-store.service";
 
 @Injectable({
   providedIn: "root",
@@ -33,7 +36,13 @@ export class AuthService {
         if (token) {
           this.sessionStorage.setToken(token);
           this.isAuthorized$$.next(true);
-          this.userStore.userName = response.user.name;
+          if (response.user.email === ADMIN_EMAIL) {
+            this.userStore.isAdmin = true;
+            this.userStore.userName = "Admin";
+          } else {
+            this.userStore.isAdmin = false;
+            this.userStore.userName = response.user.name;
+          }
           return { result: true, email: user.email };
         } else {
           this.isAuthorized$$.next(false);
@@ -63,6 +72,7 @@ export class AuthService {
           this.sessionStorage.deleteToken();
           this.isAuthorized$$.next(false);
           this.userStore.userName = "";
+          this.userStore.isAdmin = false;
           return {
             result: true,
           };
