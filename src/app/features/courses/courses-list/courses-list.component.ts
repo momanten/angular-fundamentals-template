@@ -13,18 +13,4 @@ export class CoursesListComponent {
   IconNames = IconNames;
 
   @Input() courses!: CourseInfo[];
-  @Input() editable = false;
-  @Output() showCourse = new EventEmitter<string>();
-  @Output() editCourse = new EventEmitter<string>();
-  @Output() deleteCourse = new EventEmitter<string>();
-
-  showCourseInfo(courseId: string): void {
-    this.showCourse.emit(courseId);
-  }
-  onEdit(courseId: string): void {
-    this.editCourse.emit(courseId);
-  }
-  onDelete(courseId: string): void {
-    this.deleteCourse.emit(courseId);
-  }
 }
