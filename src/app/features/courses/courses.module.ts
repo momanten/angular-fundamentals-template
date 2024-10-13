@@ -8,12 +8,7 @@ import { CoursesRoutingModule } from "./courses-routing.module";
 
 @NgModule({
   declarations: [CoursesComponent, CoursesListComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FontAwesomeModule,
-    CoursesRoutingModule,
-  ],
+  imports: [CommonModule, SharedModule, FontAwesomeModule, CoursesRoutingModule],
   providers: [],
   exports: [CoursesComponent],
 })

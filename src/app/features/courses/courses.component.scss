@@ -3,3 +3,11 @@
   margin-left: 1rem;
   font-size: 0.8rem;
 }
+
+.actionBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5%;
+}

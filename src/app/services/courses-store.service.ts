@@ -95,10 +95,7 @@ export class CoursesStoreService {
     this.isLoading$$.next(true);
     this.courseService.deleteCourse(id).subscribe({
       next: (response: DeleteCourseResponse) => {
-        if (response.successful)
-          this.courses$$.next(
-            this.courses$$.value.filter(course => course.id !== id)
-          );
+        if (response.successful) this.courses$$.next(this.courses$$.value.filter(course => course.id !== id));
       },
       error: err => {
         this.isLoading$$.next(false);

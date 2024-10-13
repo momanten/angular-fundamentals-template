@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CoursesStoreService } from "@app/services/courses-store.service";
 import { MappingService } from "@app/services/mapping.service";
 import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { Course, CourseInfo } from "@app/shared/types/course.model";
-import { combineLatest, forkJoin } from "rxjs";
+import { UserStoreService } from "@app/user/services/user-store.service";
+import { combineLatest } from "rxjs";
 
 @Component({
   selector: "app-courses",
@@ -17,6 +19,7 @@ export class CoursesComponent implements OnInit {
   allCourses: Course[] = [];
   allAuthors: Author[] = [];
   courses: CourseInfo[] = [];
+  isAdmin$ = this.userStore.isAdmin$;
 
   courseInfo: CourseInfo | undefined = undefined;
   filteredCourses: CourseInfo[] = [];
@@ -25,36 +28,27 @@ export class CoursesComponent implements OnInit {
 
   constructor(
     private coursesStore: CoursesStoreService,
-    private mapping: MappingService
+    private mapping: MappingService,
+    private userStore: UserStoreService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.coursesStore.getAll();
     this.coursesStore.getAllAuthors();
-    combineLatest([
-      this.coursesStore.courses$,
-      this.coursesStore.authors$,
-    ]).subscribe(([courses, authors]) => {
-      console.log(
-        "Authors or courses changed",
-        this.courses,
-        this.allCourses,
-        this.allAuthors
-      );
+    combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(([courses, authors]) => {
+      console.log("Authors or courses changed", this.courses, this.allCourses, this.allAuthors);
       this.allCourses = courses;
       this.allAuthors = authors;
-      this.courses = this.mapping.createCoursesWithAuthorNames(
-        this.allCourses,
-        this.allAuthors
-      );
+      this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
       console.log("My courses", this.courses);
       this.filteredCourses = this.courses;
     });
   }
 
   readonly emptyListTitle = "Your List is Empty";
-  readonly emptyListText =
-    "Please use 'ADD NEW COURSE' button to add your first course";
+  readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
   handleShowCourseInfo(courseId: string) {
     this.courseInfo = this.courses.find(course => course.id === courseId);
@@ -65,14 +59,9 @@ export class CoursesComponent implements OnInit {
   handleSearch(searchText: string): void {
     this.lastSearchedText = searchText;
     if (searchText.length > 0) {
-      if (
-        this.courses.filter(course => course.title.includes(searchText))
-          .length > 0
-      ) {
+      if (this.courses.filter(course => course.title.includes(searchText)).length > 0) {
         this.notFound = false;
-        this.filteredCourses = this.courses.filter(course =>
-          course.title.includes(searchText)
-        );
+        this.filteredCourses = this.courses.filter(course => course.title.includes(searchText));
       } else {
         this.notFound = true;
         this.filteredCourses = this.courses;
@@ -81,5 +70,10 @@ export class CoursesComponent implements OnInit {
       this.notFound = false;
       this.filteredCourses = this.courses;
     }
+  }
+
+  onAddButtonClick() {
+    this.router.navigate(["add"], { relativeTo: this.route });
+    console.log("Clicked on Add", this.router);
   }
 }

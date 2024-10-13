@@ -8,6 +8,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { IconNames } from "@app/shared/types/icons.model";
@@ -28,7 +29,10 @@ export class CourseFormComponent {
   submitted = false;
   wrongCreation = false;
 
-  constructor(public fb: FormBuilder) {
+  constructor(
+    public fb: FormBuilder,
+    private router: Router
+  ) {
     this.buildForm();
   }
 
@@ -37,14 +41,7 @@ export class CourseFormComponent {
       title: ["", [Validators.required, Validators.minLength(2)]],
       description: ["", [Validators.required, Validators.minLength(2)]],
       newAuthor: this.fb.group({
-        author: [
-          "",
-          [
-            Validators.required,
-            Validators.minLength(2),
-            this.authorValidator(),
-          ],
-        ],
+        author: ["", [Validators.required, Validators.minLength(2), this.authorValidator()]],
       }),
       duration: ["", [Validators.required, Validators.min(1)]],
       authors: this.fb.array([]), // FormArray
@@ -53,9 +50,7 @@ export class CourseFormComponent {
 
   addAuthorToCourse(author: Author): void {
     this.authors.push(this.fb.control(author));
-    this.nonCourseAuthors = this.nonCourseAuthors.filter(
-      (nonCourseAuthor) => nonCourseAuthor.id !== author.id,
-    );
+    this.nonCourseAuthors = this.nonCourseAuthors.filter(nonCourseAuthor => nonCourseAuthor.id !== author.id);
   }
   removeAuthorFromCourse(author: Author, arrayIndex: number): void {
     this.nonCourseAuthors = [...this.nonCourseAuthors, author];
@@ -66,7 +61,7 @@ export class CourseFormComponent {
     return undefined;
   }
   cancelCourse(): void {
-    return undefined;
+    this.router.navigate(["../"]);
   }
   addAuthor(): void {
     if (this.author?.valid && this.author?.value) {
@@ -104,8 +99,7 @@ export class CourseFormComponent {
       const valid = /^[a-zA-Z0-9\s]+$/.test(control.value);
       return !valid
         ? {
-            invalidAuthorCharacter:
-              "Author name can have only latin characters or numbers",
+            invalidAuthorCharacter: "Author name can have only latin characters or numbers",
           }
         : null;
     };

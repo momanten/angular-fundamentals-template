@@ -1,5 +1,11 @@
 <ng-container *ngIf="courses.length>0; else emptyList" >
-  <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search> 
+  <div class="actionBar">
+    <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search>
+    <ng-container *ngIf="isAdmin$ | async">
+      <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
+    </ng-container>
+  </div>
+
   <ng-container *ngIf="notFound">
     <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
   </ng-container>
@@ -9,7 +15,7 @@
 
 <ng-template #emptyList>
   <app-info [title]="emptyListTitle" [text]="emptyListText">
-    <app-button [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
+    <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
   </app-info>
 </ng-template>
 

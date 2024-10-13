@@ -1,8 +1,7 @@
 .app-search {
   display: flex;
-  width: 60%;
-  align-items: baseline;
-  margin-top: 5%;
+  align-items: center;
+  min-width: 50vw;
 
   & input {
     margin-right: 24px;

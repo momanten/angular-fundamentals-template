@@ -2,26 +2,15 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
 import { SessionStorageService } from "./session-storage.service";
-import {
-  APIResult,
-  LoginResponse,
-  LoginUser,
-  LogoutResponse,
-  ResgistrationResponse,
-  User,
-} from "../auth.models";
-import {
-  ADMIN_EMAIL,
-  UserStoreService,
-} from "@app/user/services/user-store.service";
+import { APIResult, LoginResponse, LoginUser, LogoutResponse, ResgistrationResponse, User } from "../auth.models";
+import { ADMIN_EMAIL, UserStoreService } from "@app/user/services/user-store.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private isAuthorized$$ = new BehaviorSubject<boolean>(false);
-  public isAuthorized$: Observable<boolean> =
-    this.isAuthorized$$.asObservable();
+  public isAuthorized$: Observable<boolean> = this.isAuthorized$$.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -65,44 +54,40 @@ export class AuthService {
     });
     console.error("logout auth", token, headers);
 
-    return this.http
-      .delete<LogoutResponse>(this.getLogoutUrl(), { headers })
-      .pipe(
-        map(() => {
-          this.sessionStorage.deleteToken();
-          this.isAuthorized$$.next(false);
-          this.userStore.userName = "";
-          this.userStore.isAdmin = false;
-          return {
-            result: true,
-          };
-        }),
-        catchError(error => {
-          return of({
-            result: false,
-            error: error?.message || "Unknown error",
-          });
-        })
-      );
+    return this.http.delete<LogoutResponse>(this.getLogoutUrl(), { headers }).pipe(
+      map(() => {
+        this.sessionStorage.deleteToken();
+        this.isAuthorized$$.next(false);
+        this.userStore.userName = "";
+        this.userStore.isAdmin = false;
+        return {
+          result: true,
+        };
+      }),
+      catchError(error => {
+        return of({
+          result: false,
+          error: error?.message || "Unknown error",
+        });
+      })
+    );
   }
 
   register(user: User): Observable<APIResult> {
-    return this.http
-      .post<ResgistrationResponse>(this.getRegistrationUrl(), user)
-      .pipe(
-        map((response: ResgistrationResponse) => {
-          return {
-            result: response.successful,
-            error: response.errors[0],
-          };
-        }),
-        catchError(error => {
-          return of({
-            result: false,
-            error: error?.message || "Unknown error",
-          });
-        })
-      );
+    return this.http.post<ResgistrationResponse>(this.getRegistrationUrl(), user).pipe(
+      map((response: ResgistrationResponse) => {
+        return {
+          result: response.successful,
+          error: response.errors[0],
+        };
+      }),
+      catchError(error => {
+        return of({
+          result: false,
+          error: error?.message || "Unknown error",
+        });
+      })
+    );
   }
 
   get isAuthorised() {

@@ -1,11 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { AuthService } from "../services/auth.service";
 import { SessionStorageService } from "../services/session-storage.service";
 import { catchError, Observable, throwError } from "rxjs";
@@ -19,10 +13,7 @@ export class TokenInterceptor implements HttpInterceptor {
     private authentication: AuthService
   ) {}
 
-  intercept(
-    req: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.sessionStorage.getToken();
     console.log("interceptor called", token);
     let tokenizedRequest: HttpRequest<unknown>;
