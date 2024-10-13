@@ -16,14 +16,7 @@ import { AdminGuard } from "./user/guards/admin.guard";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    SharedModule,
-    FontAwesomeModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    AuthModule,
-  ],
+  imports: [BrowserModule, SharedModule, FontAwesomeModule, RouterModule.forRoot(routes), HttpClientModule, AuthModule],
   providers: [
     AdminGuard,
     AuthorizedGuard,

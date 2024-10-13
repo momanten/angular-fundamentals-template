@@ -35,8 +35,6 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.coursesStore.getAll();
-    this.coursesStore.getAllAuthors();
     combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(([courses, authors]) => {
       console.log("Authors or courses changed", this.courses, this.allCourses, this.allAuthors);
       this.allCourses = courses;

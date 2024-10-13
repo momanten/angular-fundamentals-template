@@ -6,6 +6,7 @@ import { AuthService } from "./auth/services/auth.service";
 import { Router } from "@angular/router";
 import { UserStoreService } from "./user/services/user-store.service";
 import { SessionStorageService } from "./auth/services/session-storage.service";
+import { CoursesStoreService } from "./services/courses-store.service";
 
 @Component({
   selector: "app-root",
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private userService: UserStoreService,
-    private token: SessionStorageService
+    private token: SessionStorageService,
+    private coursesStore: CoursesStoreService
   ) {
     this.library.addIconPacks(fas);
     console.log("isAuth app", this.authService.isAuthorised);
@@ -28,6 +30,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUser();
+    this.coursesStore.getAll();
+    this.coursesStore.getAllAuthors();
     if (this.token.getToken()) this.authService.isAuthorised = true;
   }
 

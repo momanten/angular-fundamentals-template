@@ -14,8 +14,7 @@ import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { Course } from "@app/shared/types/course.model";
 import { IconNames } from "@app/shared/types/icons.model";
-import { Subscription, take } from "rxjs";
-import { v4 as uuidv4 } from "uuid";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-course-form",
@@ -57,7 +56,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       title: ["", [Validators.required, Validators.minLength(2)]],
       description: ["", [Validators.required, Validators.minLength(2)]],
       newAuthor: this.fb.group({
-        author: ["", [Validators.required, Validators.minLength(2), this.authorValidator()]],
+        author: ["", [Validators.minLength(2), this.authorValidator()]],
       }),
       duration: ["", [Validators.required, Validators.min(1)]],
       authors: this.fb.array([]), // FormArray
@@ -88,12 +87,17 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   addAuthor(): void {
     if (this.author?.valid && this.author?.value) {
       this.courseStore.createAuthor({ name: this.author.value });
-      this.courseForm.get("author")?.reset();
+      this.resetAuthorControl();
       this.wrongCreation = false;
     } else this.wrongCreation = true;
   }
-  private generateId(): string {
-    return uuidv4();
+  resetAuthorControl(): void {
+    const newAuthorGroup = this.courseForm.get("newAuthor") as FormGroup;
+    newAuthorGroup.get("author")?.reset();
+  }
+  isRequiredFieldsValid(): boolean {
+    const { title, description, duration } = this.courseForm.controls;
+    return title.valid && description.valid && duration.valid;
   }
   get title(): AbstractControl | null {
     return this.courseForm.get("title");
@@ -124,7 +128,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.courseForm.valid) {
+    if (this.isRequiredFieldsValid()) {
       console.log("Valid Form");
       this.createCourse();
       this.router.navigate(["../"]);
