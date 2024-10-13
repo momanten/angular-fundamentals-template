@@ -6,6 +6,6 @@ import { Author } from "../types/author.model";
 })
 export class JoinifyPipe implements PipeTransform {
   transform(authors: Author[], separator = ", "): string {
-    return authors.map((author) => author.name).join(separator);
+    return authors.map(author => author.name).join(separator);
   }
 }
