@@ -9,9 +9,7 @@ export class AdminGuard implements CanActivate {
   constructor(
     private user: UserStoreService,
     private router: Router
-  ) {
-    console.error("AdminGuard", this.user.isAdmin);
-  }
+  ) {}
 
   canActivate(): boolean | UrlTree {
     if (this.user.isAdmin) {

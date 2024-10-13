@@ -41,7 +41,7 @@ export class CoursesStoreService {
     });
   }
 
-  createCourse(course: Course) {
+  createCourse(course: Omit<Course, "id">) {
     this.isLoading$$.next(true);
     this.courseService.createCourse(course).subscribe({
       next: (response: CreateCourseResponse) => {
@@ -133,7 +133,7 @@ export class CoursesStoreService {
     });
   }
 
-  createAuthor(name: string) {
+  createAuthor(name: Omit<Author, "id">) {
     this.isLoading$$.next(true);
     this.courseService.createAuthor(name).subscribe({
       next: (response: CreateAuthorResponse) => {

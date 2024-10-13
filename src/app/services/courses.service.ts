@@ -13,6 +13,7 @@ import {
   EditCourseResponse,
   FilterResponse,
 } from "./api.models";
+import { Author } from "@app/shared/types/author.model";
 
 @Injectable({
   providedIn: "root",
@@ -21,26 +22,15 @@ export class CoursesService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<AllCourseResponse> {
-    return this.http.get<AllCourseResponse>(
-      "http://localhost:4000/courses/all"
-    );
+    return this.http.get<AllCourseResponse>("http://localhost:4000/courses/all");
   }
 
-  createCourse(course: Course): Observable<CreateCourseResponse> {
-    return this.http.post<CreateCourseResponse>(
-      "http://localhost:4000/courses/add",
-      course
-    );
+  createCourse(course: Omit<Course, "id">): Observable<CreateCourseResponse> {
+    return this.http.post<CreateCourseResponse>("http://localhost:4000/courses/add", course);
   }
 
-  editCourse(
-    id: string,
-    course: Omit<Course, "id" | "creationDate">
-  ): Observable<EditCourseResponse> {
-    return this.http.put<EditCourseResponse>(
-      `http://localhost:4000/courses/${id}`,
-      course
-    );
+  editCourse(id: string, course: Omit<Course, "id" | "creationDate">): Observable<EditCourseResponse> {
+    return this.http.put<EditCourseResponse>(`http://localhost:4000/courses/${id}`, course);
   }
 
   getCourse(id: string): Observable<CourseResponse> {
@@ -48,9 +38,7 @@ export class CoursesService {
   }
 
   deleteCourse(id: string): Observable<DeleteCourseResponse> {
-    return this.http.delete<DeleteCourseResponse>(
-      `http://localhost:4000/courses/${id}`
-    );
+    return this.http.delete<DeleteCourseResponse>(`http://localhost:4000/courses/${id}`);
   }
 
   filterCourses(filterInfo: FilterCourse): Observable<FilterResponse> {
@@ -68,25 +56,17 @@ export class CoursesService {
       params = params.append("title", title);
     });
 
-    return this.http.get<FilterResponse>(
-      "http://localhost:4000/courses/filter",
-      {
-        params,
-      }
-    );
+    return this.http.get<FilterResponse>("http://localhost:4000/courses/filter", {
+      params,
+    });
   }
 
   getAllAuthors(): Observable<AllAuthorsResponse> {
-    return this.http.get<AllAuthorsResponse>(
-      "http://localhost:4000/authors/all"
-    );
+    return this.http.get<AllAuthorsResponse>("http://localhost:4000/authors/all");
   }
 
-  createAuthor(authorName: string): Observable<CreateAuthorResponse> {
-    return this.http.post<CreateAuthorResponse>(
-      "http://localhost:4000/authors/add",
-      authorName
-    );
+  createAuthor(authorName: Omit<Author, "id">): Observable<CreateAuthorResponse> {
+    return this.http.post<CreateAuthorResponse>("http://localhost:4000/authors/add", authorName);
   }
 
   getAuthorById(id: string): Observable<AuthorResponse> {

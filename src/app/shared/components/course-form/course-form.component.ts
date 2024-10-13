@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormArray,
@@ -9,9 +9,12 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { CoursesStoreService } from "@app/services/courses-store.service";
 import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
+import { Course } from "@app/shared/types/course.model";
 import { IconNames } from "@app/shared/types/icons.model";
+import { Subscription, take } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 
 @Component({
@@ -19,21 +22,34 @@ import { v4 as uuidv4 } from "uuid";
   templateUrl: "./course-form.component.html",
   styleUrls: ["./course-form.component.scss"],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
   IconNames = IconNames;
 
   courseForm!: FormGroup;
-  allAuthors: Author[] = [];
+  private authorsSubscription: Subscription | undefined;
+  private allAuthors: Author[] = [];
   nonCourseAuthors: Author[] = [];
   submitted = false;
   wrongCreation = false;
 
   constructor(
     public fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private courseStore: CoursesStoreService
   ) {
     this.buildForm();
+  }
+
+  ngOnInit() {
+    this.authorsSubscription = this.courseStore.authors$.subscribe(authors$ => {
+      this.allAuthors = authors$;
+      this.nonCourseAuthors = this.allAuthors.filter(
+        authorAllElement =>
+          !this.authors.value.some((authorElement: Author) => authorElement.id === authorAllElement.id)
+      );
+      console.log("AllAuthors", this.allAuthors, this.nonCourseAuthors);
+    });
   }
 
   buildForm(): void {
@@ -58,19 +74,20 @@ export class CourseFormComponent {
   }
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
   createCourse(): void {
-    return undefined;
+    const course: Omit<Course, "id"> = {
+      title: this.title?.value,
+      description: this.description?.value,
+      duration: this.duration?.value,
+      authors: this.authors?.value.map((author: Author) => author.id),
+    };
+    this.courseStore.createCourse(course);
   }
   cancelCourse(): void {
     this.router.navigate(["../"]);
   }
   addAuthor(): void {
     if (this.author?.valid && this.author?.value) {
-      const newAuthor: Author = {
-        id: this.generateId(),
-        name: this.author.value,
-      };
-      this.allAuthors.push(newAuthor);
-      this.nonCourseAuthors.push(newAuthor);
+      this.courseStore.createAuthor({ name: this.author.value });
       this.courseForm.get("author")?.reset();
       this.wrongCreation = false;
     } else this.wrongCreation = true;
@@ -107,5 +124,14 @@ export class CourseFormComponent {
 
   onSubmit(): void {
     this.submitted = true;
+    if (this.courseForm.valid) {
+      console.log("Valid Form");
+      this.createCourse();
+      this.router.navigate(["../"]);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.authorsSubscription?.unsubscribe();
   }
 }
