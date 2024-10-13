@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ButtonTypes } from "./shared/types/button.type";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -7,14 +7,16 @@ import { Router } from "@angular/router";
 import { UserStoreService } from "./user/services/user-store.service";
 import { SessionStorageService } from "./auth/services/session-storage.service";
 import { CoursesStoreService } from "./services/courses-store.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
+  private subscription: Subscription | undefined;
 
   constructor(
     private library: FaIconLibrary,
@@ -36,7 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   onLogout = () => {
-    this.authService.logout().subscribe({
+    this.subscription = this.authService.logout().subscribe({
       next: result => {
         console.log(result);
       },
@@ -54,5 +56,9 @@ export class AppComponent implements OnInit {
   isAuth() {
     console.log("isAuth at app", this.authService.isAuthorised);
     return this.authService.isAuthorised;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CoursesStoreService } from "@app/services/courses-store.service";
 import { MappingService } from "@app/services/mapping.service";
@@ -6,15 +6,16 @@ import { Author } from "@app/shared/types/author.model";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { Course, CourseInfo } from "@app/shared/types/course.model";
 import { UserStoreService } from "@app/user/services/user-store.service";
-import { combineLatest } from "rxjs";
+import { combineLatest, Subscription } from "rxjs";
 
 @Component({
   selector: "app-courses",
   templateUrl: "./courses.component.html",
   styleUrls: ["./courses.component.scss"],
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
+  private subscription: Subscription | undefined;
 
   allCourses: Course[] = [];
   allAuthors: Author[] = [];
@@ -35,14 +36,16 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(([courses, authors]) => {
-      console.log("Authors or courses changed", this.courses, this.allCourses, this.allAuthors);
-      this.allCourses = courses;
-      this.allAuthors = authors;
-      this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
-      console.log("My courses", this.courses);
-      this.filteredCourses = this.courses;
-    });
+    this.subscription = combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(
+      ([courses, authors]) => {
+        console.log("Authors or courses changed", this.courses, this.allCourses, this.allAuthors);
+        this.allCourses = courses;
+        this.allAuthors = authors;
+        this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
+        console.log("My courses", this.courses);
+        this.filteredCourses = this.courses;
+      }
+    );
   }
 
   readonly emptyListTitle = "Your List is Empty";
@@ -73,5 +76,9 @@ export class CoursesComponent implements OnInit {
   onAddButtonClick() {
     this.router.navigate(["add"], { relativeTo: this.route });
     console.log("Clicked on Add", this.router);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

@@ -1,18 +1,20 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "@app/auth/services/auth.service";
 import { emailValidator } from "@app/shared/directives/email.directive";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import { IconNames } from "@app/shared/types/icons.model";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-registration-form",
   templateUrl: "./registration-form.component.html",
   styleUrls: ["./registration-form.component.scss"],
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnDestroy {
   ButtonTypes = ButtonTypes;
   IconNames = IconNames;
+  private subscription: Subscription | undefined;
 
   constructor(private authService: AuthService) {}
 
@@ -34,14 +36,18 @@ export class RegistrationFormComponent {
     return this.registrationForm.get("password");
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
-    this.authService
+    this.subscription = this.authService
       .register({
         name: this.name?.value || "",
         email: this.email?.value || "",
         password: this.password?.value || "",
       })
-      .subscribe(result => console.log("Registration", result));
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

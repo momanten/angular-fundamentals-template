@@ -29,7 +29,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   @Input() courseInfo?: CourseInfo;
 
   courseForm!: FormGroup;
-  private authorsSubscription: Subscription | undefined;
+  private subscription: Subscription | undefined;
   private allAuthors: Author[] = [];
   nonCourseAuthors: Author[] = [];
   submitted = false;
@@ -49,7 +49,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   createInit() {
     this.buildForm();
-    this.authorsSubscription = this.courseStore.authors$.subscribe(authors$ => {
+    this.subscription = this.courseStore.authors$.subscribe(authors$ => {
       this.allAuthors = authors$;
       this.nonCourseAuthors = this.allAuthors.filter(
         authorAllElement =>
@@ -60,7 +60,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
   updateInit() {
     this.actionText = "UPDATE COURSE";
-    this.authorsSubscription = this.courseStore.authors$.subscribe(authors$ => {
+    this.subscription = this.courseStore.authors$.subscribe(authors$ => {
       this.allAuthors = authors$;
       this.nonCourseAuthors = this.allAuthors.filter(
         authorAllElement =>
@@ -171,6 +171,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.authorsSubscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 }

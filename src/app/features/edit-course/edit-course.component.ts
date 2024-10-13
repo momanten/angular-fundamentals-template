@@ -1,18 +1,19 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Route } from "@angular/router";
 import { CoursesStoreService } from "@app/services/courses-store.service";
 import { MappingService } from "@app/services/mapping.service";
 import { CourseInfo } from "@app/shared/types/course.model";
-import { combineLatest, take } from "rxjs";
+import { combineLatest, Subscription, take } from "rxjs";
 
 @Component({
   selector: "app-edit-course",
   templateUrl: "./edit-course.component.html",
   styleUrls: ["./edit-course.component.css"],
 })
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent implements OnInit, OnDestroy {
   courseId: string | undefined;
   courseToUpdate: CourseInfo | undefined;
+  private subscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +22,7 @@ export class EditCourseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    combineLatest([
+    this.subscription = combineLatest([
       this.route.paramMap.pipe(take(1)),
       this.coursesStore.courses$.pipe(take(1)),
       this.coursesStore.authors$.pipe(take(1)),
@@ -37,5 +38,9 @@ export class EditCourseComponent implements OnInit {
         console.log("Course to Update:", this.courseToUpdate);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }
