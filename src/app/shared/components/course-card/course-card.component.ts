@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
+import { CoursesStoreService } from "@app/services/courses-store.service";
 import { ButtonTypes } from "@app/shared/types/button.type";
 import type { CourseInfo } from "@app/shared/types/course.model";
 import { IconNames } from "@app/shared/types/icons.model";
@@ -19,7 +20,8 @@ export class CourseCardComponent {
 
   constructor(
     private userStore: UserStoreService,
-    private router: Router
+    private router: Router,
+    private courseStore: CoursesStoreService
   ) {
     console.log("App card isadmin", this.userStore.isAdmin$);
   }
@@ -31,6 +33,6 @@ export class CourseCardComponent {
     this.router.navigate([`/courses/edit/${this.courseInfo.id}`]);
   }
   deleteCourse() {
-    return;
+    this.courseStore.deleteCourse(this.courseInfo.id);
   }
 }
