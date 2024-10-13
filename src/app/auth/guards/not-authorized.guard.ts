@@ -9,9 +9,7 @@ export class NotAuthorizedGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {
-    console.error("AuthorizedGuard", this.authService.isAuthorised);
-  }
+  ) {}
 
   canActivate(): boolean | UrlTree {
     if (!this.authService.isAuthorised) {

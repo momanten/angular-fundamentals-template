@@ -9,9 +9,7 @@ export class AuthorizedGuard implements CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {
-    console.error("AuthorizedGuard", this.authService.isAuthorised);
-  }
+  ) {}
 
   canLoad(): boolean | UrlTree {
     if (this.authService.isAuthorised) {

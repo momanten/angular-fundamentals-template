@@ -10,6 +10,7 @@ import {
   ResgistrationResponse,
   User,
 } from "../auth.models";
+import { UserStoreService } from "@app/user/services/user-store.service";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +22,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private sessionStorage: SessionStorageService
+    private sessionStorage: SessionStorageService,
+    private userStore: UserStoreService
   ) {}
 
   login(user: LoginUser): Observable<APIResult> {
@@ -31,6 +33,7 @@ export class AuthService {
         if (token) {
           this.sessionStorage.setToken(token);
           this.isAuthorized$$.next(true);
+          this.userStore.userName = response.user.name;
           return { result: true, email: user.email };
         } else {
           this.isAuthorized$$.next(false);
@@ -58,8 +61,8 @@ export class AuthService {
       .pipe(
         map(() => {
           this.sessionStorage.deleteToken();
-          this.sessionStorage.deleteUserName();
           this.isAuthorized$$.next(false);
+          this.userStore.userName = "";
           return {
             result: true,
           };

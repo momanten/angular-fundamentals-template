@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { User } from "@app/auth/auth.models";
 import { BehaviorSubject } from "rxjs";
 import { UserService } from "./user.service";
 
@@ -17,7 +16,7 @@ export class UserStoreService {
   constructor(private userService: UserService) {}
 
   getUser() {
-    return this.userService.getUser().subscribe({
+    this.userService.getUser().subscribe({
       next: response => {
         if (response.result.email === ADMIN_EMAIL) {
           this.isAdmin$$.next(true);
@@ -35,5 +34,12 @@ export class UserStoreService {
 
   set isAdmin(value: boolean) {
     this.isAdmin$$.next(value);
+  }
+  get userName() {
+    return this.name$$.getValue();
+  }
+
+  set userName(value: string) {
+    this.name$$.next(value);
   }
 }
