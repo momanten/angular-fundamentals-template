@@ -55,7 +55,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         authorAllElement =>
           !this.authors.value.some((authorElement: Author) => authorElement.id === authorAllElement.id)
       );
-      console.log("AllAuthors", this.allAuthors, this.nonCourseAuthors);
     });
   }
   updateInit() {
@@ -66,7 +65,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         authorAllElement =>
           !this.courseInfo?.authors.some((authorElement: Author) => authorElement.id === authorAllElement.id)
       );
-      console.log("AllAuthors", this.allAuthors, this.nonCourseAuthors);
     });
     this.buildForm();
   }
@@ -162,7 +160,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.submitted = true;
     if (this.isRequiredFieldsValid()) {
-      console.log("Valid Form");
       if (this.isUpdate) {
         this.updateCourse();
       } else this.createCourse();

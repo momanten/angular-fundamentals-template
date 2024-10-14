@@ -28,14 +28,12 @@ export class EditCourseComponent implements OnInit, OnDestroy {
       this.coursesStore.authors$.pipe(take(1)),
     ]).subscribe(([params, courses, authors]) => {
       this.courseId = params.get("id") || undefined;
-      console.log("Course ID:", this.courseId);
 
       if (this.courseId) {
         const course = courses.find(course => course.id === this.courseId);
         if (course) {
           this.courseToUpdate = this.mapping.createCourseWithAuthorNames(course, authors);
         }
-        console.log("Course to Update:", this.courseToUpdate);
       }
     });
   }

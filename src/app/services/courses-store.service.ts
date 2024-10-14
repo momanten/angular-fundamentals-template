@@ -47,7 +47,6 @@ export class CoursesStoreService {
       next: (response: CreateCourseResponse) => {
         this.courses$$.next([...this.courses$$.value, response.result]);
         this.isLoading$$.next(false);
-        console.log("Courses after create", this.courses$$.value);
       },
       error: err => {
         this.isLoading$$.next(false);
@@ -82,7 +81,6 @@ export class CoursesStoreService {
           })
         );
         this.isLoading$$.next(false);
-        console.log("Courses after edit", this.courses$$.value);
       },
       error: err => {
         this.isLoading$$.next(false);
@@ -96,7 +94,6 @@ export class CoursesStoreService {
     this.courseService.deleteCourse(id).subscribe({
       next: (response: DeleteCourseResponse) => {
         if (response.successful) this.courses$$.next(this.courses$$.value.filter(course => course.id !== id));
-        this.isLoading$$.next(false);
       },
       error: err => {
         this.isLoading$$.next(false);
@@ -140,7 +137,6 @@ export class CoursesStoreService {
       next: (response: CreateAuthorResponse) => {
         this.authors$$.next([...this.authors$$.value, response.result]);
         this.isLoading$$.next(false);
-        console.log("Courses after create", this.authors$$.value);
       },
       error: err => {
         this.isLoading$$.next(false);

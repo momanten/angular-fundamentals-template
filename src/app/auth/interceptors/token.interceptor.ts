@@ -15,7 +15,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.sessionStorage.getToken();
-    console.log("interceptor called", token);
     let tokenizedRequest: HttpRequest<unknown>;
     if (token) {
       tokenizedRequest = req.clone({
@@ -24,7 +23,6 @@ export class TokenInterceptor implements HttpInterceptor {
     } else {
       tokenizedRequest = req;
     }
-    console.log("TokenizedReq", tokenizedRequest);
     return next.handle(tokenizedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {

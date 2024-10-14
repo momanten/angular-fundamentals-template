@@ -25,7 +25,6 @@ export class UserStoreService {
           this.isAdmin$$.next(false);
           this.name$$.next(response.result.name);
         }
-        console.log("isAdminSet", this.name$$.value, this.isAdmin$$.value);
       },
     });
   }

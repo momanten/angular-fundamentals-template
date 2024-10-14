@@ -22,9 +22,7 @@ export class CourseCardComponent {
     private userStore: UserStoreService,
     private router: Router,
     private courseStore: CoursesStoreService
-  ) {
-    console.log("App card isadmin", this.userStore.isAdmin$);
-  }
+  ) {}
 
   showCourseInfo() {
     this.router.navigate([`/courses/${this.courseInfo.id}`]);

@@ -31,7 +31,6 @@ export class LoginFormComponent implements OnDestroy {
   onSubmit() {
     this.subscription = this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: result => {
-        console.log(result);
         this.router.navigate(["/courses"]);
       },
       error: err => {

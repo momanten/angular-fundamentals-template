@@ -39,11 +39,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(
       ([courses, authors]) => {
-        console.log("Authors or courses changed", this.courses, this.allCourses, this.allAuthors);
         this.allCourses = courses;
         this.allAuthors = authors;
         this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
-        console.log("My courses", this.courses);
         this.filteredCourses = this.courses;
       }
     );
@@ -76,7 +74,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   onAddButtonClick() {
     this.router.navigate(["add"], { relativeTo: this.route });
-    console.log("Clicked on Add", this.router);
   }
 
   ngOnDestroy(): void {

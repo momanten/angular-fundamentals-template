@@ -52,7 +52,6 @@ export class AuthService {
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-    console.error("logout auth", token, headers);
 
     return this.http.delete<LogoutResponse>(this.getLogoutUrl(), { headers }).pipe(
       map(() => {

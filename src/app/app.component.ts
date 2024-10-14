@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private coursesStore: CoursesStoreService
   ) {
     this.library.addIconPacks(fas);
-    console.log("isAuth app", this.authService.isAuthorised);
   }
 
   ngOnInit() {
@@ -39,9 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLogout = () => {
     this.subscription = this.authService.logout().subscribe({
-      next: result => {
-        console.log(result);
-      },
       error: err => {
         alert(`Logout failed on server ${JSON.stringify(err)}`);
       },
@@ -54,7 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   isAuth() {
-    console.log("isAuth at app", this.authService.isAuthorised);
     return this.authService.isAuthorised;
   }
 

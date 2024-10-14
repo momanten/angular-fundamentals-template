@@ -7,10 +7,12 @@ $input-semi-width : 25vw;
   &__flex {
     display: flex;
     justify-content: flex-start;
-    align-items: baseline;
+    align-items: center;
 
     & input {
       width:$input-semi-width;
+      height: 3rem;
+      margin-top: 0;
     }
 
     & app-button {
@@ -105,4 +107,5 @@ $input-semi-width : 25vw;
   position: relative;
   left:64px;
   align-items: center;
+  margin-bottom: 2rem;
 }
