@@ -44,5 +44,8 @@ export interface AllAuthorsResponse {
 }
 export interface UserResponse {
   successful: boolean;
-  result: Omit<User, 'password'>;
+  result: User & {
+    id: string;
+    role: string;
+  };
 }

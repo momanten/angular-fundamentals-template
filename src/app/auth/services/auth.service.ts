@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { SessionStorageService } from './session-storage.service';
 import { APIResult, LoginResponse, LoginUser, LogoutResponse, ResgistrationResponse, User } from '../auth.models';
-import { ADMIN_EMAIL, UserStoreService } from '@app/user/services/user-store.service';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,21 +18,18 @@ export class AuthService {
     private userStore: UserStoreService
   ) {}
 
-  login(user: LoginUser): Observable<APIResult> {
+  login(user: LoginUser) {
     return this.http.post<LoginResponse>(this.getLoginUrl(), user).pipe(
       map(response => {
         const token = response?.result;
         if (token) {
           this.sessionStorage.setToken(token);
           this.isAuthorized$$.next(true);
-          if (response.user.email === ADMIN_EMAIL) {
-            this.userStore.isAdmin = true;
-            this.userStore.userName = 'Admin';
-          } else {
-            this.userStore.isAdmin = false;
-            this.userStore.userName = response.user.name;
-          }
-          return { result: true, email: user.email };
+          this.userStore.getUser();
+          return {
+            result: true,
+            email: user.email,
+          };
         } else {
           this.isAuthorized$$.next(false);
           return {
@@ -52,13 +49,13 @@ export class AuthService {
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
+    this.sessionStorage.deleteToken();
+    this.isAuthorized$$.next(false);
+    this.userStore.userName = '';
+    this.userStore.isAdmin = false;
 
     return this.http.delete<LogoutResponse>(this.getLogoutUrl(), { headers }).pipe(
       map(() => {
-        this.sessionStorage.deleteToken();
-        this.isAuthorized$$.next(false);
-        this.userStore.userName = '';
-        this.userStore.isAdmin = false;
         return {
           result: true,
         };

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private userService: UserStoreService,
-    private token: SessionStorageService,
+    private tokenService: SessionStorageService,
     private coursesStore: CoursesStoreService
   ) {
     this.library.addIconPacks(fas);
@@ -33,16 +33,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userService.getUser();
     this.coursesStore.getAll();
     this.coursesStore.getAllAuthors();
-    if (this.token.getToken()) this.authService.isAuthorised = true;
+    if (this.tokenService.getToken()) this.authService.isAuthorised = true;
   }
 
-  onLogout = () => {
+  onLogout() {
     this.subscription = this.authService.logout().subscribe({
       error: err => {
         alert(`Logout failed on server ${JSON.stringify(err)}`);
       },
     });
-  };
+  }
   onLogin() {
     this.router.navigate(['/login'], {
       replaceUrl: true,

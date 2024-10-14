@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 
-export const ADMIN_EMAIL = 'admin@email.com';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -18,9 +16,9 @@ export class UserStoreService {
   getUser() {
     this.userService.getUser().subscribe({
       next: response => {
-        if (response.result.email === ADMIN_EMAIL) {
+        if (response.result.role === 'admin') {
           this.isAdmin$$.next(true);
-          this.name$$.next('Admin');
+          this.name$$.next('');
         } else {
           this.isAdmin$$.next(false);
           this.name$$.next(response.result.name);
