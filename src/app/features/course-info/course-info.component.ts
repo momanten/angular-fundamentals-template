@@ -13,8 +13,7 @@ import { combineLatest, Subscription } from 'rxjs';
 })
 export class CourseInfoComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
-  course: CourseInfo | undefined = { id: '', title: '', duration: 0, description: '', authors: [], date: '' };
-  courseId: string | undefined;
+  course: CourseInfo | undefined = {} as CourseInfo;
   private subscription: Subscription | undefined;
 
   constructor(
@@ -30,9 +29,9 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       this.coursesStore.authors$,
       this.route.paramMap,
     ]).subscribe(([courses, authors, params]) => {
-      this.courseId = params.get('id') || undefined;
-      const course = courses.find(course => course.id === this.courseId);
-      if (this.courseId && course) {
+      const courseId = params.get('id') || undefined;
+      const course = courses.find(course => course.id === courseId);
+      if (courseId && course) {
         this.course = this.mapping.createCourseWithAuthorNames(course, authors);
       }
     });

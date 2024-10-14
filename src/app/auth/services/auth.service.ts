@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { SessionStorageService } from './session-storage.service';
 import { APIResult, LoginResponse, LoginUser, LogoutResponse, ResgistrationResponse, User } from '../auth.models';
 import { UserStoreService } from '@app/user/services/user-store.service';
+import { LOGIN_URL, LOGOUT_URL, REGISTRATION_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AuthService {
   ) {}
 
   login(user: LoginUser) {
-    return this.http.post<LoginResponse>(this.getLoginUrl(), user).pipe(
+    return this.http.post<LoginResponse>(LOGIN_URL, user).pipe(
       map(response => {
         const token = response?.result;
         if (token) {
@@ -54,7 +55,7 @@ export class AuthService {
     this.userStore.userName = '';
     this.userStore.isAdmin = false;
 
-    return this.http.delete<LogoutResponse>(this.getLogoutUrl(), { headers }).pipe(
+    return this.http.delete<LogoutResponse>(LOGOUT_URL, { headers }).pipe(
       map(() => {
         return {
           result: true,
@@ -70,7 +71,7 @@ export class AuthService {
   }
 
   register(user: User): Observable<APIResult> {
-    return this.http.post<ResgistrationResponse>(this.getRegistrationUrl(), user).pipe(
+    return this.http.post<ResgistrationResponse>(REGISTRATION_URL, user).pipe(
       map((response: ResgistrationResponse) => {
         return {
           result: response.successful,
@@ -92,17 +93,5 @@ export class AuthService {
 
   set isAuthorised(value: boolean) {
     this.isAuthorized$$.next(value);
-  }
-
-  getLoginUrl() {
-    return 'http://localhost:4000/login';
-  }
-
-  getRegistrationUrl() {
-    return 'http://localhost:4000/register';
-  }
-
-  getLogoutUrl() {
-    return 'http://localhost:4000/logout';
   }
 }
