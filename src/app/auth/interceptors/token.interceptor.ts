@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { AuthService } from "../services/auth.service";
-import { SessionStorageService } from "../services/session-storage.service";
-import { catchError, Observable, throwError } from "rxjs";
-import { Router } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { SessionStorageService } from '../services/session-storage.service';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -27,7 +27,7 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           this.authentication.logout();
-          this.router.navigate(["/login"]);
+          this.router.navigate(['/login']);
         }
         return throwError(() => new Error(error.message));
       })

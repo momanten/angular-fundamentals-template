@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { Author } from "../types/author.model";
+import { Pipe, PipeTransform } from '@angular/core';
+import { Author } from '../types/author.model';
 
 @Pipe({
-  name: "joinify",
+  name: 'joinify',
 })
 export class JoinifyPipe implements PipeTransform {
-  transform(authors: Author[], separator = ", "): string {
+  transform(authors: Author[], separator = ', '): string {
     return authors.map(author => author.name).join(separator);
   }
 }

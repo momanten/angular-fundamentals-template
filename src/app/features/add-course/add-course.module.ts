@@ -6,16 +6,8 @@ import { AddCourseComponent } from './add-course.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-
 @NgModule({
-  declarations: [
-    AddCourseComponent
-  ],
-  imports: [
-    CommonModule,
-    AddCourseRoutingModule,
-    SharedModule,
-    FontAwesomeModule
-  ]
+  declarations: [AddCourseComponent],
+  imports: [CommonModule, AddCourseRoutingModule, SharedModule, FontAwesomeModule],
 })
-export class AddCourseModule { }
+export class AddCourseModule {}

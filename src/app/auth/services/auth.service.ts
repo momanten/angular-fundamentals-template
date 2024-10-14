@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
-import { SessionStorageService } from "./session-storage.service";
-import { APIResult, LoginResponse, LoginUser, LogoutResponse, ResgistrationResponse, User } from "../auth.models";
-import { ADMIN_EMAIL, UserStoreService } from "@app/user/services/user-store.service";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { SessionStorageService } from './session-storage.service';
+import { APIResult, LoginResponse, LoginUser, LogoutResponse, ResgistrationResponse, User } from '../auth.models';
+import { ADMIN_EMAIL, UserStoreService } from '@app/user/services/user-store.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
   private isAuthorized$$ = new BehaviorSubject<boolean>(false);
@@ -27,7 +27,7 @@ export class AuthService {
           this.isAuthorized$$.next(true);
           if (response.user.email === ADMIN_EMAIL) {
             this.userStore.isAdmin = true;
-            this.userStore.userName = "Admin";
+            this.userStore.userName = 'Admin';
           } else {
             this.userStore.isAdmin = false;
             this.userStore.userName = response.user.name;
@@ -37,12 +37,12 @@ export class AuthService {
           this.isAuthorized$$.next(false);
           return {
             result: false,
-            error: "Token is missing from server",
+            error: 'Token is missing from server',
           };
         }
       }),
       catchError(err => {
-        throw "Login failed: " + JSON.stringify(err.error.result);
+        throw 'Login failed: ' + JSON.stringify(err.error.result);
       })
     );
   }
@@ -57,7 +57,7 @@ export class AuthService {
       map(() => {
         this.sessionStorage.deleteToken();
         this.isAuthorized$$.next(false);
-        this.userStore.userName = "";
+        this.userStore.userName = '';
         this.userStore.isAdmin = false;
         return {
           result: true,
@@ -66,7 +66,7 @@ export class AuthService {
       catchError(error => {
         return of({
           result: false,
-          error: error?.message || "Unknown error",
+          error: error?.message || 'Unknown error',
         });
       })
     );
@@ -83,7 +83,7 @@ export class AuthService {
       catchError(error => {
         return of({
           result: false,
-          error: error?.message || "Unknown error",
+          error: error?.message || 'Unknown error',
         });
       })
     );
@@ -98,14 +98,14 @@ export class AuthService {
   }
 
   getLoginUrl() {
-    return "http://localhost:4000/login";
+    return 'http://localhost:4000/login';
   }
 
   getRegistrationUrl() {
-    return "http://localhost:4000/register";
+    return 'http://localhost:4000/register';
   }
 
   getLogoutUrl() {
-    return "http://localhost:4000/logout";
+    return 'http://localhost:4000/logout';
   }
 }

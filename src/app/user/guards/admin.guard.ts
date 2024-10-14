@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { UserStoreService } from "../services/user-store.service";
-import { CanActivate, Router, UrlTree } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { UserStoreService } from '../services/user-store.service';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
   constructor(
@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
     if (this.user.isAdmin) {
       return true; // Allow access to the route
     } else {
-      return this.router.createUrlTree(["/courses"]); // Redirect to login if not authorized
+      return this.router.createUrlTree(['/courses']); // Redirect to login if not authorized
     }
   }
 }

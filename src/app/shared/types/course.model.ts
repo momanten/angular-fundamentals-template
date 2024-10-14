@@ -1,4 +1,4 @@
-import { Author } from "./author.model";
+import { Author } from './author.model';
 
 export interface Course {
   id: string;
@@ -9,7 +9,7 @@ export interface Course {
   authors: string[];
 }
 
-export type CourseInfo = Omit<Course, "creationDate" | "authors"> & {
+export type CourseInfo = Omit<Course, 'creationDate' | 'authors'> & {
   date: string;
   authors: Author[];
 };

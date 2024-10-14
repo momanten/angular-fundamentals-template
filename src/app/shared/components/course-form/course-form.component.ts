@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -7,19 +7,19 @@ import {
   ValidationErrors,
   ValidatorFn,
   Validators,
-} from "@angular/forms";
-import { Router } from "@angular/router";
-import { CoursesStoreService } from "@app/services/courses-store.service";
-import { Author } from "@app/shared/types/author.model";
-import { ButtonTypes } from "@app/shared/types/button.type";
-import { Course, CourseInfo } from "@app/shared/types/course.model";
-import { IconNames } from "@app/shared/types/icons.model";
-import { Subscription } from "rxjs";
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Author } from '@app/shared/types/author.model';
+import { ButtonTypes } from '@app/shared/types/button.type';
+import { Course, CourseInfo } from '@app/shared/types/course.model';
+import { IconNames } from '@app/shared/types/icons.model';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-course-form",
-  templateUrl: "./course-form.component.html",
-  styleUrls: ["./course-form.component.scss"],
+  selector: 'app-course-form',
+  templateUrl: './course-form.component.html',
+  styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
@@ -34,7 +34,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   nonCourseAuthors: Author[] = [];
   submitted = false;
   wrongCreation = false;
-  actionText = "CREATE COURSE";
+  actionText = 'CREATE COURSE';
 
   constructor(
     public fb: FormBuilder,
@@ -58,7 +58,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     });
   }
   updateInit() {
-    this.actionText = "UPDATE COURSE";
+    this.actionText = 'UPDATE COURSE';
     this.subscription = this.courseStore.authors$.subscribe(authors$ => {
       this.allAuthors = authors$;
       this.nonCourseAuthors = this.allAuthors.filter(
@@ -71,12 +71,12 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.courseForm = this.fb.group({
-      title: [this.courseInfo?.title || "", [Validators.required, Validators.minLength(2)]],
-      description: [this.courseInfo?.description || "", [Validators.required, Validators.minLength(2)]],
+      title: [this.courseInfo?.title || '', [Validators.required, Validators.minLength(2)]],
+      description: [this.courseInfo?.description || '', [Validators.required, Validators.minLength(2)]],
       newAuthor: this.fb.group({
-        author: ["", [Validators.minLength(2), this.authorValidator()]],
+        author: ['', [Validators.minLength(2), this.authorValidator()]],
       }),
-      duration: [this.courseInfo?.duration || "", [Validators.required, Validators.min(1)]],
+      duration: [this.courseInfo?.duration || '', [Validators.required, Validators.min(1)]],
       authors: this.fb.array(this.courseInfo?.authors || []), // FormArray
     });
   }
@@ -91,7 +91,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
   createCourse(): void {
-    const course: Omit<Course, "id"> = {
+    const course: Omit<Course, 'id'> = {
       title: this.title?.value,
       description: this.description?.value,
       duration: this.duration?.value,
@@ -100,7 +100,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     this.courseStore.createCourse(course);
   }
   updateCourse(): void {
-    const course: Omit<Course, "id"> = {
+    const course: Omit<Course, 'id'> = {
       title: this.title?.value,
       description: this.description?.value,
       duration: this.duration?.value,
@@ -113,7 +113,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
 
   cancelCourse(): void {
-    this.router.navigate(["../"]);
+    this.router.navigate(['../']);
   }
   addAuthor(): void {
     if (this.author?.valid && this.author?.value) {
@@ -123,27 +123,27 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     } else this.wrongCreation = true;
   }
   resetAuthorControl(): void {
-    const newAuthorGroup = this.courseForm.get("newAuthor") as FormGroup;
-    newAuthorGroup.get("author")?.reset();
+    const newAuthorGroup = this.courseForm.get('newAuthor') as FormGroup;
+    newAuthorGroup.get('author')?.reset();
   }
   isRequiredFieldsValid(): boolean {
     const { title, description, duration } = this.courseForm.controls;
     return title.valid && description.valid && duration.valid;
   }
   get title(): AbstractControl | null {
-    return this.courseForm.get("title");
+    return this.courseForm.get('title');
   }
   get description(): AbstractControl | null {
-    return this.courseForm.get("description");
+    return this.courseForm.get('description');
   }
   get duration(): AbstractControl | null {
-    return this.courseForm.get("duration");
+    return this.courseForm.get('duration');
   }
   get author(): AbstractControl | null {
-    return this.courseForm.get("newAuthor.author");
+    return this.courseForm.get('newAuthor.author');
   }
   get authors(): FormArray {
-    return this.courseForm.get("authors") as FormArray;
+    return this.courseForm.get('authors') as FormArray;
   }
 
   authorValidator(): ValidatorFn {
@@ -151,7 +151,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       const valid = /^[a-zA-Z0-9\s]+$/.test(control.value);
       return !valid
         ? {
-            invalidAuthorCharacter: "Author name can have only latin characters or numbers",
+            invalidAuthorCharacter: 'Author name can have only latin characters or numbers',
           }
         : null;
     };
@@ -163,7 +163,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       if (this.isUpdate) {
         this.updateCourse();
       } else this.createCourse();
-      this.router.navigate(["../"]);
+      this.router.navigate(['../']);
     }
   }
 

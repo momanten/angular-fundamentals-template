@@ -1,11 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { LoginRoutingModule } from "./login-routing.module";
-import { LoginComponent } from "./login.component";
-import { SharedModule } from "@app/shared/shared.module";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { RouterModule } from "@angular/router";
+import { LoginRoutingModule } from './login-routing.module';
+import { LoginComponent } from './login.component';
+import { SharedModule } from '@app/shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [LoginComponent],

@@ -1,4 +1,4 @@
-import { Action } from "@ngrx/store";
+import { Action } from '@ngrx/store';
 
 // Add your code here
 
@@ -12,5 +12,4 @@ export const initialState: CoursesState = {
 
 export const coursesReducer; // Add your code here
 
-export const reducer = (state: CoursesState, action: Action): CoursesState =>
-  coursesReducer(state, action);
+export const reducer = (state: CoursesState, action: Action): CoursesState => coursesReducer(state, action);

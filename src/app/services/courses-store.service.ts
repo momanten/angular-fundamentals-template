@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Course, FilterCourse } from "@app/shared/types/course.model";
-import { BehaviorSubject, Observable, tap } from "rxjs";
-import { CoursesService } from "./courses.service";
+import { Injectable } from '@angular/core';
+import { Course, FilterCourse } from '@app/shared/types/course.model';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CoursesService } from './courses.service';
 import {
   AllAuthorsResponse,
   AllCourseResponse,
@@ -11,11 +11,11 @@ import {
   CreateCourseResponse,
   DeleteCourseResponse,
   FilterResponse,
-} from "./api.models";
-import { Author } from "@app/shared/types/author.model";
+} from './api.models';
+import { Author } from '@app/shared/types/author.model';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CoursesStoreService {
   private courses$$ = new BehaviorSubject<Course[]>([]);
@@ -35,13 +35,13 @@ export class CoursesStoreService {
         this.isLoading$$.next(false);
       },
       error: err => {
-        console.error("Failed to get courses", err);
+        console.error('Failed to get courses', err);
         this.isLoading$$.next(false);
       },
     });
   }
 
-  createCourse(course: Omit<Course, "id">) {
+  createCourse(course: Omit<Course, 'id'>) {
     this.isLoading$$.next(true);
     this.courseService.createCourse(course).subscribe({
       next: (response: CreateCourseResponse) => {
@@ -50,7 +50,7 @@ export class CoursesStoreService {
       },
       error: err => {
         this.isLoading$$.next(false);
-        console.error("Failed to add course", err);
+        console.error('Failed to add course', err);
       },
     });
   }
@@ -63,14 +63,14 @@ export class CoursesStoreService {
           this.isLoading$$.next(false);
         },
         error: err => {
-          console.error("Failed to get course", err);
+          console.error('Failed to get course', err);
           this.isLoading$$.next(false);
         },
       })
     );
   }
 
-  editCourse(id: string, course: Omit<Course, "id" | "creationDate">) {
+  editCourse(id: string, course: Omit<Course, 'id' | 'creationDate'>) {
     this.isLoading$$.next(true);
     this.courseService.editCourse(id, course).subscribe({
       next: () => {
@@ -84,7 +84,7 @@ export class CoursesStoreService {
       },
       error: err => {
         this.isLoading$$.next(false);
-        console.error("Failed to edit course", err);
+        console.error('Failed to edit course', err);
       },
     });
   }
@@ -97,7 +97,7 @@ export class CoursesStoreService {
       },
       error: err => {
         this.isLoading$$.next(false);
-        console.error("Failed to delete course", err);
+        console.error('Failed to delete course', err);
       },
     });
   }
@@ -110,7 +110,7 @@ export class CoursesStoreService {
           this.isLoading$$.next(false);
         },
         error: err => {
-          console.error("Failed to get courses", err);
+          console.error('Failed to get courses', err);
           this.isLoading$$.next(false);
         },
       })
@@ -125,13 +125,13 @@ export class CoursesStoreService {
         this.isLoading$$.next(false);
       },
       error: err => {
-        console.error("Failed to get courses", err);
+        console.error('Failed to get courses', err);
         this.isLoading$$.next(false);
       },
     });
   }
 
-  createAuthor(name: Omit<Author, "id">) {
+  createAuthor(name: Omit<Author, 'id'>) {
     this.isLoading$$.next(true);
     this.courseService.createAuthor(name).subscribe({
       next: (response: CreateAuthorResponse) => {
@@ -140,7 +140,7 @@ export class CoursesStoreService {
       },
       error: err => {
         this.isLoading$$.next(false);
-        console.error("Failed to add course", err);
+        console.error('Failed to add course', err);
       },
     });
   }
@@ -153,7 +153,7 @@ export class CoursesStoreService {
           this.isLoading$$.next(false);
         },
         error: err => {
-          console.error("Failed to get course", err);
+          console.error('Failed to get course', err);
           this.isLoading$$.next(false);
         },
       })

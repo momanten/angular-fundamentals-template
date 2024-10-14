@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Router } from "@angular/router";
-import { CoursesStoreService } from "@app/services/courses-store.service";
-import { ButtonTypes } from "@app/shared/types/button.type";
-import type { CourseInfo } from "@app/shared/types/course.model";
-import { IconNames } from "@app/shared/types/icons.model";
-import { UserStoreService } from "@app/user/services/user-store.service";
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { ButtonTypes } from '@app/shared/types/button.type';
+import type { CourseInfo } from '@app/shared/types/course.model';
+import { IconNames } from '@app/shared/types/icons.model';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
-  selector: "app-course-card",
-  templateUrl: "./course-card.component.html",
-  styleUrls: ["./course-card.component.scss"],
+  selector: 'app-course-card',
+  templateUrl: './course-card.component.html',
+  styleUrls: ['./course-card.component.scss'],
 })
 export class CourseCardComponent {
   ButtonTypes = ButtonTypes;

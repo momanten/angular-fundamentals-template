@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { UserService } from "./user.service";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { UserService } from './user.service';
 
-export const ADMIN_EMAIL = "admin@email.com";
+export const ADMIN_EMAIL = 'admin@email.com';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UserStoreService {
-  private name$$ = new BehaviorSubject<string>("");
+  private name$$ = new BehaviorSubject<string>('');
   public name$ = this.name$$.asObservable();
   private isAdmin$$ = new BehaviorSubject<boolean>(false);
   public isAdmin$ = this.isAdmin$$.asObservable();
@@ -20,7 +20,7 @@ export class UserStoreService {
       next: response => {
         if (response.result.email === ADMIN_EMAIL) {
           this.isAdmin$$.next(true);
-          this.name$$.next("Admin");
+          this.name$$.next('Admin');
         } else {
           this.isAdmin$$.next(false);
           this.name$$.next(response.result.name);

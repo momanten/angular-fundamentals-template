@@ -1,6 +1,6 @@
-import { User } from "@app/auth/auth.models";
-import { Author } from "@app/shared/types/author.model";
-import { Course } from "@app/shared/types/course.model";
+import { User } from '@app/auth/auth.models';
+import { Author } from '@app/shared/types/author.model';
+import { Course } from '@app/shared/types/course.model';
 
 export interface AllCourseResponse {
   successful: boolean;
@@ -44,5 +44,5 @@ export interface AllAuthorsResponse {
 }
 export interface UserResponse {
   successful: boolean;
-  result: Omit<User, "password">;
+  result: Omit<User, 'password'>;
 }

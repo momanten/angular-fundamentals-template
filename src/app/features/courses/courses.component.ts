@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CoursesStoreService } from "@app/services/courses-store.service";
-import { MappingService } from "@app/services/mapping.service";
-import { Author } from "@app/shared/types/author.model";
-import { ButtonTypes } from "@app/shared/types/button.type";
-import { Course, CourseInfo } from "@app/shared/types/course.model";
-import { UserStoreService } from "@app/user/services/user-store.service";
-import { combineLatest, Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { MappingService } from '@app/services/mapping.service';
+import { Author } from '@app/shared/types/author.model';
+import { ButtonTypes } from '@app/shared/types/button.type';
+import { Course, CourseInfo } from '@app/shared/types/course.model';
+import { UserStoreService } from '@app/user/services/user-store.service';
+import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-courses",
-  templateUrl: "./courses.component.html",
-  styleUrls: ["./courses.component.scss"],
+  selector: 'app-courses',
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit, OnDestroy {
   ButtonTypes = ButtonTypes;
@@ -25,7 +25,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   courseInfo: CourseInfo | undefined = undefined;
   filteredCourses: CourseInfo[] = [];
-  lastSearchedText = "";
+  lastSearchedText = '';
   notFound = false;
 
   constructor(
@@ -47,7 +47,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     );
   }
 
-  readonly emptyListTitle = "Your List is Empty";
+  readonly emptyListTitle = 'Your List is Empty';
   readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
   handleShowCourseInfo(courseId: string) {
@@ -73,7 +73,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   onAddButtonClick() {
-    this.router.navigate(["add"], { relativeTo: this.route });
+    this.router.navigate(['add'], { relativeTo: this.route });
   }
 
   ngOnDestroy(): void {
