@@ -19,6 +19,7 @@ import { EmailValidatorDirective } from "@shared/directives/email.directive";
 import { JoinifyPipe } from "./pipes/joinify.pipe";
 import { HideableDirective } from "./directives/hideable.directive";
 import { IconComponent } from "./components/icon/icon.component";
+import { RouterModule } from "@angular/router";
 
 const components = [
   HeaderComponent,
@@ -40,7 +41,7 @@ const components = [
 
 @NgModule({
   declarations: [components],
-  imports: [FontAwesomeModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [components],
 })
 export class SharedModule {}
