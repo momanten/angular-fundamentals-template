@@ -1,17 +1,22 @@
-<ng-container *ngIf="courses.length>0; else emptyList" >
-  <div class="actionBar">
-    <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search>
-    <ng-container *ngIf="isAdmin$ | async">
-      <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
-    </ng-container>
-  </div>
+<ng-container *ngIf="isLoading$ | async; then Loading; else coursesTemplate">
 
-  <ng-container *ngIf="notFound">
-    <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
-  </ng-container>
-  <app-courses-list [courses]="filteredCourses"></app-courses-list>
 </ng-container>
 
+<ng-template #coursesTemplate>
+  <ng-container *ngIf="courses.length>0; else emptyList" >
+    <div class="actionBar">
+      <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search>
+      <ng-container *ngIf="isAdmin$ | async">
+        <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="notFound">
+      <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
+    </ng-container>
+    <app-courses-list [courses]="filteredCourses"></app-courses-list>
+  </ng-container>
+</ng-template>
 
 <ng-template #emptyList>
   <app-info [title]="emptyListTitle" [text]="emptyListText">
@@ -19,5 +24,8 @@
   </app-info>
 </ng-template>
 
+<ng-template #Loading>
+  <span>LOADING</span>
+</ng-template>
 
 

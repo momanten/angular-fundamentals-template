@@ -21,6 +21,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   allAuthors: Author[] = [];
   courses: CourseInfo[] = [];
   isAdmin$ = this.userStore.isAdmin$;
+  isLoading$ = this.coursesStore.isLoading$;
 
   courseInfo: CourseInfo | undefined = undefined;
   filteredCourses: CourseInfo[] = [];
