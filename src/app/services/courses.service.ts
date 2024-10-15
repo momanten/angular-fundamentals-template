@@ -52,19 +52,18 @@ export class CoursesService {
 
   filterCourses(filterInfo: FilterCourse): Observable<FilterResponse> {
     let params = new HttpParams();
-    filterInfo.duration.forEach(duration => {
-      params = params.append('duration', duration);
-    });
-    filterInfo.creationDate.forEach(date => {
-      params = params.append('creationDate', date);
-    });
-    filterInfo.description.forEach(desc => {
-      params = params.append('description', desc);
-    });
-    filterInfo.title.forEach(title => {
-      params = params.append('title', title);
-    });
-
+    if (filterInfo.duration.length > 0) {
+      params = params.set('duration', filterInfo.duration.join(','));
+    }
+    if (filterInfo.creationDate.length > 0) {
+      params = params.set('creationDate', filterInfo.creationDate.join(','));
+    }
+    if (filterInfo.description.length > 0) {
+      params = params.set('description', filterInfo.description.join(','));
+    }
+    if (filterInfo.title.length > 0) {
+      params = params.set('title', filterInfo.title.join(','));
+    }
     return this.http.get<FilterResponse>(FILTER_URL, {
       params,
     });
