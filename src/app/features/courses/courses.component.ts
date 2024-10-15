@@ -5,7 +5,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { MappingService } from '@app/services/mapping.service';
 import { Author } from '@app/shared/types/author.model';
 import { ButtonTypes } from '@app/shared/types/button.type';
-import { Course, CourseInfo } from '@app/shared/types/course.model';
+import { Course, CourseInfo, FilterCourse } from '@app/shared/types/course.model';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { combineLatest, Subscription } from 'rxjs';
 
@@ -25,7 +25,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   isLoading$ = this.coursesStore.isLoading$;
 
   courseInfo: CourseInfo | undefined = undefined;
-  filteredCourses: CourseInfo[] = [];
   lastSearchedText = '';
   notFound = false;
 
@@ -48,7 +47,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.allCourses = courses;
         this.allAuthors = authors;
         this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
-        this.filteredCourses = this.courses;
       }
     );
   }
@@ -64,18 +62,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
   handleSearch(searchText: string): void {
     this.lastSearchedText = searchText;
-    if (searchText.length > 0) {
-      if (this.courses.filter(course => course.title.includes(searchText)).length > 0) {
+    const filterParams: FilterCourse =
+      searchText.length > 0
+        ? { title: [searchText], duration: [], description: [], creationDate: [] }
+        : { title: [], duration: [], description: [], creationDate: [] };
+    this.coursesStore.filterCourses(filterParams).subscribe(response => {
+      if (response.successful && response.result.length > 0) {
         this.notFound = false;
-        this.filteredCourses = this.courses.filter(course => course.title.includes(searchText));
-      } else {
-        this.notFound = true;
-        this.filteredCourses = this.courses;
-      }
-    } else {
-      this.notFound = false;
-      this.filteredCourses = this.courses;
-    }
+      } else this.notFound = true;
+    });
   }
 
   onAddButtonClick() {

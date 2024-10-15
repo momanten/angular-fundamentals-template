@@ -14,7 +14,7 @@
     <ng-container *ngIf="notFound">
       <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
     </ng-container>
-    <app-courses-list [courses]="filteredCourses"></app-courses-list>
+    <app-courses-list [courses]="courses"></app-courses-list>
   </ng-container>
 </ng-template>
 
