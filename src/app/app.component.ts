@@ -30,10 +30,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userService.getUser();
     this.coursesStore.getAll();
     this.coursesStore.getAllAuthors();
-    if (this.tokenService.getToken()) this.authService.isAuthorised = true;
+    if (this.tokenService.getToken()) {
+      this.authService.isAuthorised = true;
+      this.userService.getUser();
+    }
   }
 
   onLogout() {

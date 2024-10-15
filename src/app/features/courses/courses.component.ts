@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@app/auth/services/auth.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { MappingService } from '@app/services/mapping.service';
 import { Author } from '@app/shared/types/author.model';
@@ -33,10 +34,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private mapping: MappingService,
     private userStore: UserStoreService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    if (this.authService.isAuthorised) {
+      this.coursesStore.getAll();
+      this.coursesStore.getAllAuthors();
+    } // else navigate to login but it is done by authGuard
     this.subscription = combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(
       ([courses, authors]) => {
         this.allCourses = courses;

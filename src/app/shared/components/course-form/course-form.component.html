@@ -95,7 +95,7 @@
       </div>
       <div class="course__authors_list">
         <h3>Authors List</h3>
-        <ng-container *ngFor="let author of nonCourseAuthors">
+        <ng-container *ngFor="let author of nonCourseAuthors$ | async">
           <div class="course__authors_list-item_container">
             <div class="course__authors_list-item_name">{{author.name}}</div>
             <div class="course__authors_list-item_actions">

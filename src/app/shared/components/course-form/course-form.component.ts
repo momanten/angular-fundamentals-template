@@ -14,7 +14,7 @@ import { Author } from '@app/shared/types/author.model';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import { Course, CourseInfo } from '@app/shared/types/course.model';
 import { IconNames } from '@app/shared/types/icons.model';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-form',
@@ -31,7 +31,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   courseForm!: FormGroup;
   private subscription: Subscription | undefined;
   private allAuthors: Author[] = [];
-  nonCourseAuthors: Author[] = [];
+  nonCourseAuthors$!: Observable<Author[]>;
   submitted = false;
   wrongCreation = false;
   actionText = 'CREATE COURSE';
@@ -49,24 +49,23 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   createInit() {
     this.buildForm();
-    this.subscription = this.courseStore.authors$.subscribe(authors$ => {
-      this.allAuthors = authors$;
-      this.nonCourseAuthors = this.allAuthors.filter(
-        authorAllElement =>
-          !this.authors.value.some((authorElement: Author) => authorElement.id === authorAllElement.id)
-      );
-    });
+    this.subscribeToAllAuthors();
   }
   updateInit() {
     this.actionText = 'UPDATE COURSE';
-    this.subscription = this.courseStore.authors$.subscribe(authors$ => {
-      this.allAuthors = authors$;
-      this.nonCourseAuthors = this.allAuthors.filter(
-        authorAllElement =>
-          !this.courseInfo?.authors.some((authorElement: Author) => authorElement.id === authorAllElement.id)
-      );
-    });
+    this.subscribeToAllAuthors();
     this.buildForm();
+  }
+
+  subscribeToAllAuthors() {
+    this.nonCourseAuthors$ = this.courseStore.authors$.pipe(
+      map((authors$: Author[]) =>
+        authors$.filter(
+          authorAllElement =>
+            !this.courseInfo?.authors.some((authorElement: Author) => authorElement.id === authorAllElement.id)
+        )
+      )
+    );
   }
 
   buildForm(): void {
@@ -83,10 +82,12 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   addAuthorToCourse(author: Author): void {
     this.authors.push(this.fb.control(author));
-    this.nonCourseAuthors = this.nonCourseAuthors.filter(nonCourseAuthor => nonCourseAuthor.id !== author.id);
+    this.nonCourseAuthors$ = this.nonCourseAuthors$.pipe(
+      map(nonCourseAuthors => nonCourseAuthors.filter(nonCourseAuthor => nonCourseAuthor.id !== author.id))
+    );
   }
   removeAuthorFromCourse(author: Author, arrayIndex: number): void {
-    this.nonCourseAuthors = [...this.nonCourseAuthors, author];
+    this.nonCourseAuthors$ = this.nonCourseAuthors$.pipe(map(nonCourseAuthors => [...nonCourseAuthors, author]));
     this.authors.removeAt(arrayIndex);
   }
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.

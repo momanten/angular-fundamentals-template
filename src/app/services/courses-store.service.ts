@@ -94,9 +94,13 @@ export class CoursesStoreService {
     this.courseService.deleteCourse(id).subscribe({
       next: (response: DeleteCourseResponse) => {
         if (response.successful) this.courses$$.next(this.courses$$.value.filter(course => course.id !== id));
+        this.getAllAuthors();
+        this.getAll();
         this.isLoading$$.next(false);
       },
       error: err => {
+        this.getAllAuthors();
+        this.getAll(); //try to refresh courses as maybe deletion failed because of a paralllel delete
         this.isLoading$$.next(false);
         console.error('Failed to delete course', err);
       },
