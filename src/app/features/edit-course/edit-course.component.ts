@@ -11,7 +11,6 @@ import { combineLatest, Subscription, take } from 'rxjs';
   styleUrls: ['./edit-course.component.css'],
 })
 export class EditCourseComponent implements OnInit, OnDestroy {
-  courseId: string | undefined;
   courseToUpdate: CourseInfo | undefined;
   private subscription: Subscription | undefined;
 
@@ -27,10 +26,10 @@ export class EditCourseComponent implements OnInit, OnDestroy {
       this.coursesStore.courses$.pipe(take(1)),
       this.coursesStore.authors$.pipe(take(1)),
     ]).subscribe(([params, courses, authors]) => {
-      this.courseId = params.get('id') || undefined;
+      const courseId = params.get('id') || undefined;
 
-      if (this.courseId) {
-        const course = courses.find(course => course.id === this.courseId);
+      if (courseId) {
+        const course = courses.find(course => course.id === courseId);
         if (course) {
           this.courseToUpdate = this.mapping.createCourseWithAuthorNames(course, authors);
         }
