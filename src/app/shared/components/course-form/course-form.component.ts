@@ -30,7 +30,6 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   courseForm!: FormGroup;
   private subscription: Subscription | undefined;
-  private allAuthors: Author[] = [];
   nonCourseAuthors$!: Observable<Author[]>;
   submitted = false;
   wrongCreation = false;
@@ -43,16 +42,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.isUpdate) this.updateInit();
-    else this.createInit();
-  }
-
-  createInit() {
-    this.buildForm();
-    this.subscribeToAllAuthors();
-  }
-  updateInit() {
-    this.actionText = 'UPDATE COURSE';
+    if (this.isUpdate) this.actionText = 'UPDATE COURSE';
     this.subscribeToAllAuthors();
     this.buildForm();
   }

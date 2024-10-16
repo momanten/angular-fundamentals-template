@@ -92,8 +92,7 @@ export class CoursesStoreService {
   deleteCourse(id: string) {
     this.isLoading$$.next(true);
     this.courseService.deleteCourse(id).subscribe({
-      next: (response: DeleteCourseResponse) => {
-        if (response.successful) this.courses$$.next(this.courses$$.value.filter(course => course.id !== id));
+      next: () => {
         this.getAllAuthors();
         this.getAll();
         this.isLoading$$.next(false);
