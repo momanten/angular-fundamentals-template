@@ -1,19 +1,18 @@
 <!-- Replace ::text:: with your code -->
 <div class="course-info-container">
-  <div class="title">{{course.title}}</div>
+  <div class="title">{{course?.title}}</div>
   <div class="course-info">
     <div class="course-info__description">
-      {{course.description}}
+      {{course?.description}}
     </div>
     <div class="course-info__info">
-      <div><b>ID: </b><span class="course-info__info-id">{{course.id}}</span></div>
-      <div><b>Duration: </b><span class="course-info__info-duration">{{course.duration | duration}}</span></div>
-      <div><b>Created: </b><span class="course-info__info-date">{{course.date | customDate}}</span></div>
-      <div><b>Authors: </b><span class="course-info__info-authors"></span>{{course.authors | joinify:', '}}</div>
+      <div><b>ID: </b><span class="course-info__info-id">{{course?.id}}</span></div>
+      <div><b>Duration: </b><span class="course-info__info-duration">{{course?.duration | duration}}</span></div>
+      <div><b>Created: </b><span class="course-info__info-date">{{course!.date | customDate}}</span></div>
+      <div><b>Authors: </b><span class="course-info__info-authors"></span>{{course!.authors | joinify:', '}}</div>
     </div>
   </div>
   <div class="navigation-block">
     <app-button [type]="ButtonTypes.Button" (click)="handleBackToCourses()" [buttonText]="'BACK'"></app-button>
-    <!--Enter your code here-->
   </div>
 </div>

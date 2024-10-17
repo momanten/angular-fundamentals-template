@@ -47,7 +47,8 @@
           <app-button [type]="ButtonTypes.Submit" buttonText="Login"></app-button>
         </div>
         <div class="form__text">
-          If you don't have an account you may do <strong>Registration</strong>
+          <span>If you don't have an account you may do </span>
+          <a [routerLink]="['/registration']">Registration</a>
         </div>
       </div>
     </div>

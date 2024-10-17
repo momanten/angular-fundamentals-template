@@ -17,9 +17,14 @@
             </div>
             <div class="course-card__info-actions">
                 <app-button [type]="ButtonTypes.Button" (click)="showCourseInfo()" [buttonText]="'Show Course'"></app-button>
-                <div class="course-card__buttons">
+                <div *ngIf="isAdmin$ | async" class="course-card__buttons">
                     <!--Enter your code here-->
-                    <ng-content></ng-content>
+                    <app-button (click)="editCourse()" [type]="ButtonTypes.Button">
+                        <app-icon [iconName]="IconNames.Pencil"></app-icon>
+                    </app-button>
+                    <app-button (click)="deleteCourse()" [type]="ButtonTypes.Button">
+                       <app-icon [iconName]="IconNames.TrashCan"></app-icon>
+                    </app-button>
                 </div>
             </div>
         </div>

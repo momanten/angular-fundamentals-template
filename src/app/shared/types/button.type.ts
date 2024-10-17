@@ -1,4 +1,4 @@
 export enum ButtonTypes {
-  Submit = "submit",
-  Button = "button",
+  Submit = 'submit',
+  Button = 'button',
 }

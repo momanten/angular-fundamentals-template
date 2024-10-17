@@ -11,7 +11,6 @@ $color-border-init-input: rgba($color: #808080, $alpha: 1.0);
     background-color: $color-white;
     border: 1px solid $color-gray;
     border-radius: 4px;
-    padding: 32px;
     display: flex;
     justify-content: center;
 }
@@ -27,6 +26,13 @@ $color-border-init-input: rgba($color: #808080, $alpha: 1.0);
 }
 
 .form {
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10vh;
+    }
+
     &__control {
         margin-bottom: 24px;
     }

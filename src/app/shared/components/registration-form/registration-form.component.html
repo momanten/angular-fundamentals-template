@@ -41,7 +41,7 @@
         </div>
         <div class="form__control">
           <!--Use the name `password` for the form control.-->
-          <label for="password">Password</label>
+          <label for="registrationPassword">Password</label>
           <div class="password-container">
             <input id="registrationPassword" name="password" placeholder="Input text"
                    formControlName="password"  hideable #hideableRef="hideableRef"
@@ -62,7 +62,7 @@
         <app-button [type]="ButtonTypes.Submit" buttonText="Register"></app-button>
       </div>
       <div class="form__text">
-        If you don't have an account you may <strong>Login</strong>
+        <span>If you don't have an account you may <a [routerLink]="['/login']">Login</a></span>
       </div>
     </div>
   </div>

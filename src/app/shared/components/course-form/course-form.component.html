@@ -95,7 +95,7 @@
       </div>
       <div class="course__authors_list">
         <h3>Authors List</h3>
-        <ng-container *ngFor="let author of nonCourseAuthors">
+        <ng-container *ngFor="let author of nonCourseAuthors$ | async">
           <div class="course__authors_list-item_container">
             <div class="course__authors_list-item_name">{{author.name}}</div>
             <div class="course__authors_list-item_actions">
@@ -111,7 +111,7 @@
   </div>
   <div class="form__actions">
     <div class="form__action">
-      <app-button (click)="createCourse()" [type]="ButtonTypes.Submit" [buttonText]="'Create Course'"></app-button>
+      <app-button [type]="ButtonTypes.Submit" [buttonText]="actionText"></app-button>
     </div>
     <div class="form__action">
       <app-button (click)="cancelCourse()" [type]="ButtonTypes.Button" [buttonText]="'Cancel'"></app-button>

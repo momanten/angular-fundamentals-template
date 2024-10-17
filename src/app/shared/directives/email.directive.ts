@@ -1,11 +1,5 @@
-import { Directive } from "@angular/core";
-import {
-  AbstractControl,
-  NG_VALIDATORS,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-} from "@angular/forms";
+import { Directive } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 
 export function emailValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -17,7 +11,7 @@ export function emailValidator(): ValidatorFn {
 }
 
 @Directive({
-  selector: "[emailValidator]",
+  selector: '[emailValidator]',
   providers: [
     {
       provide: NG_VALIDATORS,

@@ -3,14 +3,17 @@ $input-semi-width : 25vw;
 
 .course {
  min-width: 60vw;
+ margin:5rem;
 
   &__flex {
     display: flex;
     justify-content: flex-start;
-    align-items: baseline;
+    align-items: center;
 
     & input {
       width:$input-semi-width;
+      height: 3rem;
+      margin-top: 0;
     }
 
     & app-button {
@@ -103,6 +106,8 @@ $input-semi-width : 25vw;
   flex-direction: row-reverse;
   gap:0.5rem;
   position: relative;
-  left:64px;
   align-items: center;
+  margin-right: 4rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }

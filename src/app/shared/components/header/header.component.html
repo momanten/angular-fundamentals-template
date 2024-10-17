@@ -1,7 +1,8 @@
 <div class="app-header">
   <img alt="logo" src="assets/logo.svg">
   <!-- Enter your code here -->
-  <div class="dynamic-content-container">
+  <div *ngIf="isMainPage" class="dynamic-content-container">
+    <span>{{ userName$ | async }}</span>
     <ng-content></ng-content>
   </div>
 </div>
