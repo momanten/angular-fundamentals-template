@@ -32,12 +32,17 @@ export const coursesReducer = createReducer(
     isSearchState: false,
     errorMessage: null,
   })),
-  on(CourseActions.requestAllCoursesSuccess, (state, { courses }) => ({
-    ...state,
-    allCourses: courses,
-    isAllCoursesLoading: false,
-    errorMessage: null,
-  })),
+  on(CourseActions.requestAllCoursesSuccess, (state, { courses }) => {
+    console.log('Reducer All succ Current State:', state);
+    console.log('Reducer All succ Action Payload (Courses):', courses);
+
+    return {
+      ...state,
+      allCourses: courses,
+      isAllCoursesLoading: false,
+      errorMessage: null,
+    };
+  }),
   on(CourseActions.requestAllCoursesFail, (state, { error }) => ({
     ...state,
     isAllCoursesLoading: false,

@@ -6,6 +6,7 @@ import { MappingService } from '@app/services/mapping.service';
 import { Author } from '@app/shared/types/author.model';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import { Course, CourseInfo, FilterCourse } from '@app/shared/types/course.model';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { combineLatest, Subscription } from 'rxjs';
 
@@ -22,7 +23,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   allAuthors: Author[] = [];
   courses: CourseInfo[] = [];
   isAdmin$ = this.userStore.isAdmin$;
-  isLoading$ = this.coursesStore.isLoading$;
+  isLoading$ = this.coursesStore.isLoading$ || this.coursesFacade.isAllCoursesLoading$;
 
   courseInfo: CourseInfo | undefined = undefined;
   lastSearchedText = '';
@@ -34,18 +35,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private userStore: UserStoreService,
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private coursesFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
     if (this.authService.isAuthorised) {
-      this.coursesStore.getAll();
+      this.coursesFacade.getAllCourses();
       this.coursesStore.getAllAuthors();
     } // else navigate to login but it is done by authGuard
-    this.subscription = combineLatest([this.coursesStore.courses$, this.coursesStore.authors$]).subscribe(
+    this.subscription = combineLatest([this.coursesFacade.allCourses$, this.coursesStore.authors$]).subscribe(
       ([courses, authors]) => {
         this.allCourses = courses;
         this.allAuthors = authors;
+        console.log('AllCourses', this.courses);
         this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
       }
     );

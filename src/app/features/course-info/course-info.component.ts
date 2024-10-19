@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { MappingService } from '@app/services/mapping.service';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import { CourseInfo } from '@app/shared/types/course.model';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
@@ -19,22 +20,26 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private coursesStore: CoursesStoreService,
-    private route: ActivatedRoute,
-    private mapping: MappingService
+    private mapping: MappingService,
+    private coursesFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
     this.subscription = combineLatest([
-      this.coursesStore.courses$,
+      this.coursesFacade.course$,
+      this.coursesFacade.isSingleCourseLoading$,
       this.coursesStore.authors$,
-      this.route.paramMap,
-    ]).subscribe(([courses, authors, params]) => {
-      const courseId = params.get('id') || undefined;
-      const course = courses.find(course => course.id === courseId);
-      if (courseId && course) {
+    ]).subscribe(([course, isLoading, authors]) => {
+      if (course) {
+        console.log('singleCourseLoading 1??', isLoading);
         this.course = this.mapping.createCourseWithAuthorNames(course, authors);
       }
+      console.log('singleCourseLoading 2??', this.coursesFacade.isSingleCourseLoading$);
     });
+  }
+
+  get loading$() {
+    return this.coursesFacade.isAllCoursesLoading$;
   }
 
   handleBackToCourses() {

@@ -8,6 +8,7 @@ import { UserStoreService } from './user/services/user-store.service';
 import { SessionStorageService } from './auth/services/session-storage.service';
 import { CoursesStoreService } from './services/courses-store.service';
 import { Subscription } from 'rxjs';
+import { CoursesStateFacade } from './store/courses/courses.facade';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +25,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UserStoreService,
     private tokenService: SessionStorageService,
-    private coursesStore: CoursesStoreService
+    private coursesStore: CoursesStoreService,
+    private coursesFacade: CoursesStateFacade
   ) {
     this.library.addIconPacks(fas);
   }
 
   ngOnInit() {
-    this.coursesStore.getAll();
+    this.coursesFacade.getAllCourses();
+
     this.coursesStore.getAllAuthors();
     if (this.tokenService.getToken()) {
       this.authService.isAuthorised = true;

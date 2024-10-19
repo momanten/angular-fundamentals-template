@@ -9,7 +9,6 @@ import {
   CourseResponse,
   CreateAuthorResponse,
   CreateCourseResponse,
-  DeleteCourseResponse,
   FilterResponse,
 } from './api.models';
 import { Author } from '@app/shared/types/author.model';

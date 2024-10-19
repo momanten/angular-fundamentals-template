@@ -14,6 +14,7 @@ import { Author } from '@app/shared/types/author.model';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import { Course, CourseInfo } from '@app/shared/types/course.model';
 import { IconNames } from '@app/shared/types/icons.model';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -38,7 +39,8 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   constructor(
     public fb: FormBuilder,
     private router: Router,
-    private courseStore: CoursesStoreService
+    private courseStore: CoursesStoreService,
+    private courseFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
@@ -88,17 +90,18 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       duration: this.duration?.value,
       authors: this.authors?.value.map((author: Author) => author.id),
     };
-    this.courseStore.createCourse(course);
+    this.courseFacade.createCourse(course);
   }
   updateCourse(): void {
-    const course: Omit<Course, 'id' | 'creationDate'> = {
-      title: this.title?.value,
-      description: this.description?.value,
-      duration: this.duration?.value,
-      authors: this.authors?.value.map((author: Author) => author.id),
-    };
     if (this.courseInfo?.id) {
-      this.courseStore.editCourse(this.courseInfo.id, course);
+      const course: Omit<Course, 'creationDate'> = {
+        id: this.courseInfo.id,
+        title: this.title?.value,
+        description: this.description?.value,
+        duration: this.duration?.value,
+        authors: this.authors?.value.map((author: Author) => author.id),
+      };
+      this.courseFacade.editCourse(course);
     }
   }
 
