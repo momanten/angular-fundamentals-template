@@ -4,13 +4,12 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  creationDate?: string;
+  creationDate: string;
   duration: number;
   authors: string[];
 }
 
-export type CourseInfo = Omit<Course, 'creationDate' | 'authors'> & {
-  date: string;
+export type CourseInfo = Omit<Course, 'authors'> & {
   authors: Author[];
 };
 

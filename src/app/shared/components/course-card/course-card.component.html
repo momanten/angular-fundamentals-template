@@ -13,7 +13,7 @@
                   {{ courseInfo.authors | joinify:', ' }}
                 </div>
                 <div><b>Duration: </b><span class="course-card__duration">{{courseInfo.duration | duration}}</span></div>
-                <div><b>Created: </b><span class="course-card__date">{{courseInfo.date | customDate}}</span></div>
+                <div><b>Created: </b><span class="course-card__date">{{courseInfo.creationDate | customDate}}</span></div>
             </div>
             <div class="course-card__info-actions">
                 <app-button [type]="ButtonTypes.Button" (click)="showCourseInfo()" [buttonText]="'Show Course'"></app-button>

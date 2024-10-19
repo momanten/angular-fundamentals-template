@@ -41,7 +41,7 @@ export class CoursesStoreService {
     });
   }
 
-  createCourse(course: Omit<Course, 'id'>) {
+  createCourse(course: Omit<Course, 'id' | 'creationDate'>) {
     this.isLoading$$.next(true);
     this.courseService.createCourse(course).subscribe({
       next: (response: CreateCourseResponse) => {
@@ -76,7 +76,7 @@ export class CoursesStoreService {
       next: () => {
         this.courses$$.next(
           this.courses$$.value.map(courseElement => {
-            if (courseElement.id === id) return { ...course, id: id };
+            if (courseElement.id === id) return { ...course, id: id, creationDate: courseElement.creationDate };
             else return courseElement;
           })
         );

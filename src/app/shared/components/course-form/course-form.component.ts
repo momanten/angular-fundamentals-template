@@ -82,7 +82,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
   createCourse(): void {
-    const course: Omit<Course, 'id'> = {
+    const course: Omit<Course, 'id' | 'creationDate'> = {
       title: this.title?.value,
       description: this.description?.value,
       duration: this.duration?.value,
@@ -91,12 +91,11 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     this.courseStore.createCourse(course);
   }
   updateCourse(): void {
-    const course: Omit<Course, 'id'> = {
+    const course: Omit<Course, 'id' | 'creationDate'> = {
       title: this.title?.value,
       description: this.description?.value,
       duration: this.duration?.value,
       authors: this.authors?.value.map((author: Author) => author.id),
-      creationDate: this.courseInfo?.date,
     };
     if (this.courseInfo?.id) {
       this.courseStore.editCourse(this.courseInfo.id, course);
