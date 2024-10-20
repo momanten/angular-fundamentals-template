@@ -156,7 +156,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       if (this.isUpdate) {
         this.updateCourse();
       } else this.createCourse();
-      this.router.navigate(['../']);
+      //Navigation back to /courses is done by effect!!
     }
   }
 

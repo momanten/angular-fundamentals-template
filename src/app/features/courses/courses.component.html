@@ -11,9 +11,9 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="showInfo.length>0">
-      <span [ngClass]="'noCourse'">{{showInfo}}</span>
-    </ng-container>
+    <div  [ngClass]="'noCourseContainer'">
+      <span *ngIf="showInfo.length>0" #noCourse id="noCourse" name="noCourse" [ngClass]="['noCourse', 'animate']">{{showInfo}}</span>
+    </div>
     <app-courses-list [courses]="courses"></app-courses-list>
   </ng-container>
 </ng-template>

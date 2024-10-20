@@ -1,20 +1,35 @@
-.noCourse {
+.noCourseContainer {
   display: flex;
-  color:rgb(0, 62, 219);
-  font-size: 1rem;
-  margin-top: 2rem;
-  justify-content: left;
-  font-weight: bold;
-  opacity: 0.4;
-  animation: sizeAnimation 1s ease-in-out;
+  position: relative;
+  justify-content: center;
 }
 
-@keyframes sizeAnimation {
+.noCourse {
+  display: flex;
+  color:rgb(255, 22, 22);
+  font-size: 1rem;
+  justify-content: left;
+  font-weight: bold;
+  opacity: 0.5;
+  position: absolute;
+  z-index: 2;
+  text-shadow: 0 0.05rem 0.5rem rgb(252, 0, 88);
+ /*  filter: drop-shadow(0 0 5px rgb(246, 0, 0)); */
+}
+
+.animate {
+  /* Apply the size animation when this class is added */
+  animation: showAnimation 1s ease-in-out;
+}
+
+@keyframes showAnimation {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.5;
+    scale: 1;
   }
   50% {
     opacity: 1;
+    scale: 2;
   }
 }
 
@@ -25,4 +40,5 @@
   align-items: center;
   margin-top: 5%;
   width: 100%;
+  margin-bottom: 5%;
 }

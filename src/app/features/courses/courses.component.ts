@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
@@ -16,6 +16,8 @@ import { combineLatest, Subscription } from 'rxjs';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit, OnDestroy {
+  @ViewChild('noCourse') noCourseSpan!: ElementRef;
+
   ButtonTypes = ButtonTypes;
   private subscription: Subscription | undefined;
 
@@ -63,6 +65,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       } else if (this.searching && this.filteredCourses.length <= 0) {
         this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
         this.showInfo = this.noCourseText;
+        this.triggerAnimation();
       } else {
         this.courses = this.mapping.createCoursesWithAuthorNames(this.allCourses, this.allAuthors);
         this.showInfo = '';
@@ -74,25 +77,23 @@ export class CoursesComponent implements OnInit, OnDestroy {
   readonly emptyListTitle = 'Your List is Empty';
   readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
+  triggerAnimation() {
+    console.log('Triggered', this.noCourseSpan);
+    if (this.noCourseSpan) {
+      console.log('Triggered inside', this.noCourseSpan.nativeElement);
+      const element = this.noCourseSpan.nativeElement;
+      element.classList.remove('animate');
+      setTimeout(() => {
+        element.classList.add('animate');
+      }, 10);
+    }
+  }
   handleShowCourseInfo(courseId: string) {
     this.courseInfo = this.courses.find(course => course.id === courseId);
   }
   handleShowCourses(): void {
     this.courseInfo = undefined;
   }
-  /*   handleSearch(searchText: string): void {
-    this.lastSearchedText = searchText;
-    const filterParams: FilterCourse =
-      searchText.length > 0
-        ? { title: [searchText], duration: [], description: [], creationDate: [] }
-        : { title: [], duration: [], description: [], creationDate: [] };
-    this.coursesStore.filterCourses(filterParams).subscribe(response => {
-      if (response.successful && response.result.length > 0) {
-        this.notFound = false;
-      } else this.notFound = true;
-    });
-  } */
-
   onAddButtonClick() {
     this.router.navigate(['add'], { relativeTo: this.route });
   }
