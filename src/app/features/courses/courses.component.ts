@@ -28,10 +28,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   isLoading$ = this.coursesStore.isLoading$ || this.coursesFacade.isAllCoursesLoading$;
   searching = false;
   filteredCourses: Course[] = [];
-
-  courseInfo: CourseInfo | undefined = undefined;
-  lastSearchedText = '';
-  notFound = false;
   showInfo = '';
 
   constructor(
@@ -88,12 +84,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       }, 10);
     }
   }
-  handleShowCourseInfo(courseId: string) {
-    this.courseInfo = this.courses.find(course => course.id === courseId);
-  }
-  handleShowCourses(): void {
-    this.courseInfo = undefined;
-  }
+
   onAddButtonClick() {
     this.router.navigate(['add'], { relativeTo: this.route });
   }

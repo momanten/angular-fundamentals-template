@@ -13,13 +13,11 @@
   opacity: 0.5;
   position: absolute;
   z-index: 2;
-  text-shadow: 0 0.05rem 0.5rem rgb(252, 0, 88);
- /*  filter: drop-shadow(0 0 5px rgb(246, 0, 0)); */
+  text-shadow: 0 0.05rem 0.1rem rgb(38, 31, 34);
 }
 
 .animate {
-  /* Apply the size animation when this class is added */
-  animation: showAnimation 1s ease-in-out;
+  animation: showAnimation 1.5s ease-in-out;
 }
 
 @keyframes showAnimation {
