@@ -29,10 +29,10 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       this.coursesFacade.course$,
       this.coursesFacade.isSingleCourseLoading$,
       this.coursesStore.authors$,
-    ]).subscribe(([course, , authors]) => {
+    ]).subscribe(([course, loading, authors]) => {
       if (course) {
         this.course = this.mapping.createCourseWithAuthorNames(course, authors);
-      }
+      } else if (!loading) this.router.navigate(['../']);
     });
   }
 
