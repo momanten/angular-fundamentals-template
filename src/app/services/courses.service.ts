@@ -34,7 +34,7 @@ export class CoursesService {
     return this.http.get<AllCourseResponse>(COURSES_ALL_URL);
   }
 
-  createCourse(course: Omit<Course, 'id'>): Observable<CreateCourseResponse> {
+  createCourse(course: Omit<Course, 'id' | 'creationDate'>): Observable<CreateCourseResponse> {
     return this.http.post<CreateCourseResponse>(COURSES_ADD_URL, course);
   }
 

@@ -12,10 +12,22 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { TokenInterceptor } from './auth/interceptors/token.interceptor';
 import { AdminGuard } from './user/guards/admin.guard';
+import { StoreModule } from '@ngrx/store';
+import { effects, reducers } from './store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, SharedModule, FontAwesomeModule, AppRoutingModule, HttpClientModule, AuthModule],
+  imports: [
+    BrowserModule,
+    SharedModule,
+    FontAwesomeModule,
+    AppRoutingModule,
+    HttpClientModule,
+    AuthModule,
+    StoreModule.forRoot(reducers), // Register the reducers
+    EffectsModule.forRoot(effects),
+  ], // Register the effects],
   providers: [
     AdminGuard,
     AuthorizedGuard,

@@ -3,29 +3,31 @@
 </ng-container>
 
 <ng-template #coursesTemplate>
-  <ng-container *ngIf="courses.length>0; else emptyList" >
+  <ng-container *ngIf="courses.length>0 || searching; else emptyList" >
     <div class="actionBar">
-      <app-search (search)="handleSearch($event)" [placeholder]="'Course...'"></app-search>
+      <app-search [placeholder]="'Course...'"></app-search>
       <ng-container *ngIf="isAdmin$ | async">
         <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
       </ng-container>
     </div>
 
-    <ng-container *ngIf="notFound">
-      <span [ngClass]="'noCourse'">No course found for {{lastSearchedText}} - All courses are shown</span>
-    </ng-container>
+    <div  [ngClass]="'noCourseContainer'">
+      <span *ngIf="showInfo.length>0" #noCourse id="noCourse" name="noCourse" [ngClass]="['noCourse', 'animate']">{{showInfo}}</span>
+    </div>
     <app-courses-list [courses]="courses"></app-courses-list>
   </ng-container>
 </ng-template>
 
 <ng-template #emptyList>
-  <app-info [title]="emptyListTitle" [text]="emptyListText">
-    <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
-  </app-info>
+    <app-info [title]="emptyListTitle" [text]="emptyListText">
+      <app-button (click)="onAddButtonClick()" [type]="ButtonTypes.Button" [buttonText]="'ADD NEW COURSE'"></app-button>
+    </app-info>
 </ng-template>
 
 <ng-template #Loading>
-  <span>LOADING</span>
+<div  [ngClass]="'loadingContainer'">
+  <span [ngClass]="'loading'">LOADING...</span>
+</div>
 </ng-template>
 
 
