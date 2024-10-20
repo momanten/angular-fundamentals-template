@@ -6,6 +6,16 @@
   justify-content: left;
   font-weight: bold;
   opacity: 0.4;
+  animation: sizeAnimation 1s ease-in-out;
+}
+
+@keyframes sizeAnimation {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .actionBar {

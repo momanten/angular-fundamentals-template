@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 

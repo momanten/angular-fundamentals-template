@@ -29,7 +29,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       this.coursesFacade.course$,
       this.coursesFacade.isSingleCourseLoading$,
       this.coursesStore.authors$,
-    ]).subscribe(([course, loading, authors]) => {
+    ]).subscribe(([course, , authors]) => {
       if (course) {
         this.course = this.mapping.createCourseWithAuthorNames(course, authors);
       }
