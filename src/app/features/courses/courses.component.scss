@@ -6,7 +6,7 @@
 
 .noCourse {
   display: flex;
-  color:rgb(255, 22, 22);
+  color:rgb(245, 0, 53);
   font-size: 1rem;
   justify-content: left;
   font-weight: bold;
@@ -14,6 +14,19 @@
   position: absolute;
   z-index: 2;
   text-shadow: 0 0.05rem 0.1rem rgb(38, 31, 34);
+}
+
+.loading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba($color: #325b9d, $alpha: 1.0);
+}
+
+.loadingContainer {
+  margin-top: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .animate {

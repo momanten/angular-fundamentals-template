@@ -25,7 +25,9 @@
 </ng-template>
 
 <ng-template #Loading>
-  <span>LOADING</span>
+<div  [ngClass]="'loadingContainer'">
+  <span [ngClass]="'loading'">LOADING...</span>
+</div>
 </ng-template>
 
 
