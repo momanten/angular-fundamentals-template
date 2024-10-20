@@ -110,12 +110,10 @@ export class CoursesStoreService {
     return this.courseService.filterCourses(filterInfo).pipe(
       tap({
         next: response => {
-          console.log('Filterinfo', filterInfo);
           this.isLoading$$.next(false);
           if (response.result.length > 0) {
             this.courses$$.next(response.result);
           }
-          console.log('Course reflected');
         },
         error: err => {
           console.error('Failed to get courses', err);

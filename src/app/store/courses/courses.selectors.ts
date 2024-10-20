@@ -18,7 +18,7 @@ export const isSingleCourseLoadingSelector = createSelector(
   (state: CoursesState) => state.isSingleCourseLoading
 );
 
-export const getCourses = createSelector(selectCoursesState, (state: CoursesState) => state.allCourses);
+export const getCourses = createSelector(selectCoursesState, (state: CoursesState) => state.courses);
 
 export const getAllCourses = createSelector(selectCoursesState, (state: CoursesState) => state.allCourses);
 

@@ -27,7 +27,6 @@ export class CoursesStateFacade {
 
   getAllCourses(): void {
     this.store.dispatch(CoursesActions.requestAllCourses());
-    console.log('GetAllCourses in Facade called');
   }
 
   getSingleCourse(id: string): void {

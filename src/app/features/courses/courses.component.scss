@@ -1,7 +1,11 @@
 .noCourse {
-  color:rgb(219, 149, 28);
+  display: flex;
+  color:rgb(0, 62, 219);
   font-size: 1rem;
   margin-top: 2rem;
+  justify-content: left;
+  font-weight: bold;
+  opacity: 0.4;
 }
 
 .actionBar {
@@ -10,4 +14,5 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 5%;
+  width: 100%;
 }

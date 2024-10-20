@@ -21,12 +21,11 @@ export class CoursesEffects {
       ofType(CoursesConstants.REQUEST_ALL_COURSES),
       exhaustMap(() =>
         this.coursesService.getAll().pipe(
-          tap(courses => console.log('Courses retrieved in effect:', courses)), // Log the retrieved courses
           map(courses => ({
             type: CoursesConstants.REQUEST_ALL_COURSES_SUCCESS,
             courses: courses.result,
           })),
-          tap(resultAction => console.log('Dispatched Action after getAll:', resultAction)),
+
           catchError((error: Error) => of({ type: CoursesConstants.REQUEST_ALL_COURSES_FAIL, error: error.message }))
         )
       )
@@ -38,8 +37,8 @@ export class CoursesEffects {
       ofType(CoursesConstants.REQUEST_FILTERED_COURSES),
       withLatestFrom(this.coursesFacade.allCourses$),
       exhaustMap(([action, allCourses]) => {
-        const { searchText } = action;
-        const filteredCourses = allCourses.filter(course => course.title.includes(searchText));
+        const { title } = action;
+        const filteredCourses = allCourses.filter(course => course.title.includes(title));
         return of({
           type: CoursesConstants.REQUEST_FILTERED_COURSES_SUCCESS,
           courses: filteredCourses,
@@ -60,7 +59,6 @@ export class CoursesEffects {
       exhaustMap(action => {
         const { id } = action;
         return this.coursesService.getCourse(id).pipe(
-          tap(course => console.log('Single Course retrieved in effect:', course)), // Log the retrieved courses
           map(response => ({
             type: CoursesConstants.REQUEST_SINGLE_COURSE_SUCCESS,
             course: response.result,
@@ -82,7 +80,6 @@ export class CoursesEffects {
       exhaustMap(action => {
         const { id } = action;
         return this.coursesService.deleteCourse(id).pipe(
-          tap(response => console.log('Delete Course retrieved in effect:', id, response)), // Log the retrieved courses
           map(() => ({
             type: CoursesConstants.REQUEST_DELETE_COURSE_SUCCESS,
             id: id,

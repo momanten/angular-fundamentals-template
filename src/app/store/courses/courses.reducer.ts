@@ -6,6 +6,7 @@ export const coursesFeatureKey = 'courses';
 
 export interface CoursesState {
   allCourses: Course[];
+  courses: Course[];
   course: Course | null;
   isAllCoursesLoading: boolean;
   isSingleCourseLoading: boolean;
@@ -15,6 +16,7 @@ export interface CoursesState {
 
 export const initialState: CoursesState = {
   allCourses: [],
+  courses: [],
   course: null,
   isAllCoursesLoading: false,
   isSingleCourseLoading: false,
@@ -33,9 +35,6 @@ export const coursesReducer = createReducer(
     errorMessage: null,
   })),
   on(CourseActions.requestAllCoursesSuccess, (state, { courses }) => {
-    console.log('Reducer All succ Current State:', state);
-    console.log('Reducer All succ Action Payload (Courses):', courses);
-
     return {
       ...state,
       allCourses: courses,
@@ -70,20 +69,17 @@ export const coursesReducer = createReducer(
   //FILTER COURSES
   on(CourseActions.requestFilteredCourses, state => ({
     ...state,
-    isAllCoursesLoading: true,
     errorMessage: null,
     isSearchState: true,
   })),
   on(CourseActions.requestFilteredCoursesSuccess, (state, { courses }) => ({
     ...state,
-    allCourses: courses,
-    isAllCoursesLoading: false,
+    courses: courses,
     errorMessage: null,
     isSearchState: true,
   })),
   on(CourseActions.requestFilteredCoursesFail, (state, { error }) => ({
     ...state,
-    isAllCoursesLoading: false,
     errorMessage: error,
     isSearchState: false,
   })),

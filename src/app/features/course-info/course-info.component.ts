@@ -29,17 +29,15 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       this.coursesFacade.course$,
       this.coursesFacade.isSingleCourseLoading$,
       this.coursesStore.authors$,
-    ]).subscribe(([course, isLoading, authors]) => {
+    ]).subscribe(([course, loading, authors]) => {
       if (course) {
-        console.log('singleCourseLoading 1??', isLoading);
         this.course = this.mapping.createCourseWithAuthorNames(course, authors);
       }
-      console.log('singleCourseLoading 2??', this.coursesFacade.isSingleCourseLoading$);
     });
   }
 
   get loading$() {
-    return this.coursesFacade.isAllCoursesLoading$;
+    return this.coursesFacade.isSingleCourseLoading$;
   }
 
   handleBackToCourses() {
