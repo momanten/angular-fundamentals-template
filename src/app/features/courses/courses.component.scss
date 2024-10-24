@@ -29,21 +29,6 @@
   align-items: center;
 }
 
-.animate {
-  animation: showAnimation 1.5s ease-in-out;
-}
-
-@keyframes showAnimation {
-  0%, 100% {
-    opacity: 0.5;
-    scale: 1;
-  }
-  50% {
-    opacity: 1;
-    scale: 2;
-  }
-}
-
 .actionBar {
   display: flex;
   flex-direction: row;

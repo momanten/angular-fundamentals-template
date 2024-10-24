@@ -11,8 +11,8 @@
       </ng-container>
     </div>
 
-    <div  [ngClass]="'noCourseContainer'">
-      <span *ngIf="showInfo.length>0" #noCourse id="noCourse" name="noCourse" [ngClass]="['noCourse', 'animate']">{{showInfo}}</span>
+    <div ngClass="noCourseContainer">
+      <span *ngIf="showInfo.length>0" [@showAnimation]="animationState" (@showAnimation.done)="onAnimationDone()" id="noCourse" name="noCourse" ngClass="noCourse">{{showInfo}}</span>
     </div>
     <app-courses-list [courses]="courses"></app-courses-list>
   </ng-container>

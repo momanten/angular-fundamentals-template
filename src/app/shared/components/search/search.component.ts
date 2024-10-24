@@ -17,6 +17,8 @@ export class SearchComponent {
   searchString = '';
 
   searchCourse(): void {
-    this.coursesFacade.getFilteredCourses(this.searchString);
+    if (this.searchString.length > 0) {
+      this.coursesFacade.getFilteredCourses(this.searchString);
+    } else this.coursesFacade.getAllCourses();
   }
 }

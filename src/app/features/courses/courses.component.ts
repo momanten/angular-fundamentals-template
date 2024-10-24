@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
@@ -14,10 +15,22 @@ import { combineLatest, Subscription } from 'rxjs';
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
+  animations: [
+    trigger('showAnimation', [
+      transition('relaxing => animate', [
+        animate(
+          '1.5s ease-in-out',
+          keyframes([
+            style({ opacity: 0.5, transform: 'scale(1)', offset: 0 }),
+            style({ opacity: 1, transform: 'scale(2)', offset: 0.5 }),
+            style({ opacity: 0.5, transform: 'scale(1)', offset: 1 }),
+          ])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-  @ViewChild('noCourse') noCourseSpan!: ElementRef;
-
   ButtonTypes = ButtonTypes;
   private subscription: Subscription | undefined;
 
@@ -29,6 +42,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   searching = false;
   filteredCourses: Course[] = [];
   showInfo = '';
+  animationState: 'relaxing' | 'animate' = 'relaxing';
 
   constructor(
     private coursesStore: CoursesStoreService,
@@ -74,15 +88,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
   readonly emptyListText = "Please use 'ADD NEW COURSE' button to add your first course";
 
   triggerAnimation() {
-    console.log('Triggered', this.noCourseSpan);
-    if (this.noCourseSpan) {
-      console.log('Triggered inside', this.noCourseSpan.nativeElement);
-      const element = this.noCourseSpan.nativeElement;
-      element.classList.remove('animate');
-      setTimeout(() => {
-        element.classList.add('animate');
-      }, 10);
-    }
+    this.animationState = 'relaxing';
+    setTimeout(() => {
+      this.animationState = 'animate';
+    }, 10);
+  }
+
+  onAnimationDone() {
+    this.animationState = 'relaxing';
   }
 
   onAddButtonClick() {

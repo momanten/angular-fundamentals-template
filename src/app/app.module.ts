@@ -15,11 +15,13 @@ import { AdminGuard } from './user/guards/admin.guard';
 import { StoreModule } from '@ngrx/store';
 import { effects, reducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     FontAwesomeModule,
     AppRoutingModule,
