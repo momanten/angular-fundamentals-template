@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { MappingService } from '@app/services/mapping.service';
 import { CourseInfo } from '@app/shared/types/course.model';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 import { combineLatest, Subscription, take } from 'rxjs';
 
 @Component({
@@ -17,13 +18,14 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private coursesStore: CoursesStoreService,
-    private mapping: MappingService
+    private mapping: MappingService,
+    private coursesFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
     this.subscription = combineLatest([
       this.route.paramMap.pipe(take(1)),
-      this.coursesStore.courses$.pipe(take(1)),
+      this.coursesFacade.allCourses$.pipe(take(1)),
       this.coursesStore.authors$.pipe(take(1)),
     ]).subscribe(([params, courses, authors]) => {
       const courseId = params.get('id') || undefined;

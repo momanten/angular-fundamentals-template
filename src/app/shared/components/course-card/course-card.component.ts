@@ -4,6 +4,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { ButtonTypes } from '@app/shared/types/button.type';
 import type { CourseInfo } from '@app/shared/types/course.model';
 import { IconNames } from '@app/shared/types/icons.model';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
@@ -21,16 +22,17 @@ export class CourseCardComponent {
   constructor(
     private userStore: UserStoreService,
     private router: Router,
-    private courseStore: CoursesStoreService
+    private courseFacade: CoursesStateFacade
   ) {}
 
   showCourseInfo() {
+    this.courseFacade.getSingleCourse(this.courseInfo.id);
     this.router.navigate([`/courses/${this.courseInfo.id}`]);
   }
   editCourse() {
     this.router.navigate([`/courses/edit/${this.courseInfo.id}`]);
   }
   deleteCourse() {
-    this.courseStore.deleteCourse(this.courseInfo.id);
+    this.courseFacade.deleteCourse(this.courseInfo.id);
   }
 }

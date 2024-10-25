@@ -12,7 +12,7 @@ export class MappingService {
         id: course.id,
         title: course.title,
         description: course.description,
-        date: course.creationDate || '',
+        creationDate: course.creationDate || '',
         duration: course.duration,
         authors: course.authors.map(authorId => {
           const author = authors.find(author => author.id === authorId);
@@ -28,7 +28,7 @@ export class MappingService {
         id: course.id,
         title: course.title,
         description: course.description,
-        date: course.creationDate || '', // 'creationDate' to 'date'
+        creationDate: course.creationDate || '', // 'creationDate' to 'date'
         duration: course.duration,
         authors: course.authors.map(authorId => {
           const author = authors.find(author => author.id === authorId);
